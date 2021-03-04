@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=gaddis_9thed_chap9_population
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/gaddis_9thed_chap9_population
+CND_ARTIFACT_NAME_Debug=gaddis_9thed_chap5_population
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/gaddis_9thed_chap5_population
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=gaddis9thedchap9population.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/gaddis9thedchap9population.tar
+CND_PACKAGE_NAME_Debug=gaddis9thedchap5population.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/gaddis9thedchap5population.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=gaddis_9thed_chap9_population
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/gaddis_9thed_chap9_population
+CND_ARTIFACT_NAME_Release=gaddis_9thed_chap5_population
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/gaddis_9thed_chap5_population
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=gaddis9thedchap9population.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/gaddis9thedchap9population.tar
+CND_PACKAGE_NAME_Release=gaddis9thedchap5population.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/gaddis9thedchap5population.tar
 #
 # include compiler specific variables
 #
