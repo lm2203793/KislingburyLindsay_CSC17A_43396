@@ -1,7 +1,7 @@
 /* 
  * File:   main.cpp
  * Author: Lindsay Kislingbury
- * Created on March 3, 2021, 9:30 PM
+ * Created on March 4, 2021, 6:42 PM
  * Purpose:  Weather Data Table
  */
 
@@ -27,7 +27,6 @@ int main(int argc, char** argv) {
     //Map Inputs to Outputs -> Process
     
     //Display Inputs/Outputs
-    cout<<"Hello World!";
     
     //Exit the Program - Cleanup
     return 0;
