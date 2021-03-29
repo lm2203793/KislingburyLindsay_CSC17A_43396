@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
     cout<<"This program searches a list of names."<<endl;
     cout<<"Here is the list of names:"<<endl;
     for(int x=0; x<20; x++){
-        cout<<"#"<<x+1<<": ";
+        cout<<x<<": ";
         cout<<names[x]<<endl;
     }
     
