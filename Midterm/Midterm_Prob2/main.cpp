@@ -12,9 +12,9 @@
 using namespace std;
 
 //Function Prototypes
-PayChk *input(unsigned short &);
-void print(PayChk *, unsigned short &);
-string engConv(float pay);
+PayChk *input(unsigned short &);        //Get Employee Data
+void print(PayChk *, unsigned short &); //Convert Gross Pay to English
+string engConv(float pay);              //Display Pay Checks
 
 //Execution Begins Here
 int main(int argc, char** argv) {  
@@ -51,9 +51,14 @@ PayChk *input(unsigned short &emplys){
     cin.ignore();
     cout<<"Enter the Company Name: ";       
     getline(cin, (*chk).company);
+    for(int i=1; i<emplys; i++){
+        chk[i].company=chk[0].company;
+    }
     cout<<"Enter the Company Address: ";
     getline(cin, chk->address);
-    
+    for(int i=1; i<emplys; i++){
+        chk[i].address=chk[0].address;
+    }
     //Get Employee Info
     for(int i=0; i<emplys; i++){
         cout<<"Enter Employee # "<<i+1<<"'s name: ";
@@ -232,16 +237,17 @@ void print(PayChk *chk, unsigned short &emplys){
             cout<<"*";
         }
         cout<<"**"<<endl;
-                cout<<chk[emp].company<<endl;         
-                cout<<chk[emp].address<<endl;
-                cout<<left<<setw(40)<<chk[emp].name<<right<<setw(30)<<"April 25th 2021\n"<<endl;
-                cout<<right<<setw(55)<<"$"<<left<<chk[emp].gross<<endl;
-                cout<<fixed<<setprecision(2)<<chk[emp].engPay<<endl;
-                cout<<left<<setw(40)<<"FOR: PAYCHECK"<<right<<setw(30)<<"................"<<endl;
-            for(int j=0; j<width; j++){
-                cout<<" ";
-            }
-            cout<<endl;
+        cout<<chk[emp].company<<endl;         
+        cout<<chk[emp].address<<endl;
+        cout<<endl;
+        cout<<left<<setw(40)<<chk[emp].name<<right<<setw(30)<<"April 25th 2021\n"<<endl;
+        cout<<right<<setw(55)<<"$"<<left<<chk[emp].gross<<endl;
+        cout<<fixed<<setprecision(2)<<chk[emp].engPay<<endl;
+        cout<<left<<setw(40)<<"FOR: PAYCHECK"<<right<<setw(30)<<"................"<<endl;
+        for(int j=0; j<width; j++){
+            cout<<" ";
+        }
+        cout<<endl;
         for(int i=0; i<width; i++){
             cout<<"*";
         }

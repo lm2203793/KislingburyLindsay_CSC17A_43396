@@ -1,8 +1,9 @@
 /* 
  * File:   main.cpp
- * Author: Lindsay Kislingbury
- * Date: April 25, 2021 5:49PM
- * Purpose:  Driver program to test out the statistics problem.
+ * Author: Linday Kislingbury
+ * Date: April 26, 2021 2:11PM
+ * Purpose:  Midterm Problem #3 Not included in menu
+ * Driver program to test out the statistics problem.
  */
 
 //Libraries
@@ -149,34 +150,95 @@ Stats *stat(const Array *array){
     //Non-working stub to be completed by the student
     cout<<endl<<"Stat function to be completed by the student"<<endl;
     Stats *stats=new Stats;
+    
+    //Mode    
+    //Allocate the mode array
     stats->mode=new Array;
-    stats->mode->size=0;
-    int nModes=0;
-    if(nModes!=0)stats->mode->data=new int[nModes];
-    stats->modFreq=0;
-    stats->median=0;
-    return stats;
-}
-
-//MODE
-Stats *mode(const Array *array, int n){
+    //Find max frequency
     int freq=0, nmodes=0;
-    
-    int *ary=copy(array,n);
-    
-    //Find the max Frequency
-    for(int i=0; i<n; i++){
-        int count=0;                        //hold the number of times a value appears in the array
-        for(int j=0; j<n; j++){
-            if(ary[j].data==array[i].data){             //if an element matches, increment count
-                count++;
+    for(int i=0; i<array->size; i++){
+        int count=0;                                //Instances of the number
+        for(int j=0; j<array->size; j++){
+            if(array->data[j]==array->data[i]){     //Element matches
+                count++;                            //Increment Count
             }
         }   
         if(count>=freq){
-            freq=count;                     //store highest count in frequency
+            freq=count;                             //Highest Count
         }
     }
     
-    cout<<"freq = "<<freq;
-    return 
+    //Store the max frequency
+    stats->modFreq=freq;
+    
+    //Find number of modes
+    for(int i=0; i<array->size; i++){
+        int match=0;                                //Number of matches found
+            for(int k=i+1; k<(i+freq); k++){
+                if(array->data[i]==array->data[k]){ //Element matches
+                    match++;                        //Increment match
+                  if(match==(freq-1)){              //Matches = Max frequency
+                      nmodes++;                     //Increment number of modes
+                      i=k;                          //Skip over to next value
+                      break; 
+                  }
+                }                               
+                else{                               //Element doesn't match
+                    i=k;                            //Skip over to next value
+                    break;
+                  }
+            }     
+    }
+    
+    //Store the number of modes
+    stats->mode->size=nmodes;
+    
+    if(nmodes!=0){
+       stats->mode->data=new int[stats->mode->size];
+        //Fill the mode array
+        int indx=0;                             //Index to store mode values
+        int count=0;                            //Count number of modes
+        for(int i=0; i<array->size; i++){
+            int match=0;                        //Number of matches found
+                for(int k=i+1; k<(i+freq); k++){
+                    if(array->data[i]==array->data[k]){//Match
+                        match++;
+                      if(match==(freq-1)){      //Number of matches = Max freq
+                          stats->mode->data[indx]=array->data[i]; //Store 
+                          indx++;               //Increment index
+                          i=k;                  //Skip over to next value
+                          break; 
+                      }
+                    }
+                    else{                       //Match not found, skip over
+                        i=k;
+                        break;
+                      }
+                }     
+        }
+    }
+    //Median
+    //The number in the middle, or the average of the two middle numbers
+    float median=0.0;                            //Hold the median value
+    if(array->size%2 != 0){                      //If the array size is even         
+        median=array->data[array->size/2];       //Get the middle value          
+    }
+    else{                                        //If the array size is odd
+        median=array->data[(array->size-1)/2];   //Average of middle numbers
+    }
+    
+    //Store the median
+    stats->median=median;
+    
+    //Mean (average)
+    float mean=0.0;
+    for(int i=0; i<array->size; i++){
+        mean+=array->data[i];                 //Sum all values
+    }   
+    mean/=array->size;                           //Divide by number of values
+    
+    //Store the average
+    stats->avg=mean;
+    
+    return stats;
 }

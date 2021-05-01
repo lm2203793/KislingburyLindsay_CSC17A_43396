@@ -9,22 +9,25 @@
 #include <iostream>  //I/O Library
 #include <iomanip>   //Formating Library
 #include "Account.h" //Account Information Structure
+
 using namespace std;
 
 //Function Prototypes
-Account *input();                   //Get Account Information
-bool calc(Account *, float &);      //Calculate Balance and Overdrawn Status
-void output(Account *, float);      //Display Account Information
+Account *input();                                       //Get Account Info
+void calc(Account *, float &, float &, float &, bool &);//Balance, Overdrawn
+void output(Account *, float, float, float, bool);      //Display Account Info
+void destroy(Account *);                                //Deallocate Memory
 
 //Execution of Code Begins Here
 int main(int argc, char** argv) {
     
     //Declare variables
-    Account *acc;  //Pointer to the Account Information Structure
-    float balance; //Hold Account Balance
-    
-    //Initialize all known variables
-    balance=0;
+    Account *acc;         //Pointer to the Account Information Structure
+    float balance=0,      //Account Balance
+          totDeps=0,      //Total Deposits
+          totChks=0;      //Total Checks
+    bool  over=false;     //Overdrawn Status
+
     
     //Get Account Information   
     cout<<"This program will determine if you have exceeded your "
@@ -32,13 +35,13 @@ int main(int argc, char** argv) {
     acc=input();
     
     //Calculate Balance and Overdrawn Status
-    calc(acc, balance);
+    calc(acc, balance, totDeps, totChks, over);
     
     //Display Account Information
-    output(acc, balance);
+    output(acc, balance, totDeps, totChks, over);
     
     //Clean up
-    delete acc;
+    destroy(acc);
     
     //Exit stage right
     return 0;
@@ -48,104 +51,101 @@ int main(int argc, char** argv) {
 
 //Get Account Information
 Account *input(){
+    //Allocate memory for accInfo Structure
     Account *accInfo = new Account;
-    float x=0;          //Hold Customer Input
-    int counter=0;      //Hold number of deposits/checks
-    char choice;        //Hold menu choice
-    
+    int input=0;    //Hold user input
     //Get Customer Information
+    cin.clear();
+    cin.ignore();
     cout<<"Enter Customer Name: ";
     getline(cin, (*accInfo).name);
     cout<<"Enter Customer Address: ";
     getline(cin, accInfo->address);
-    do{                             
-        cout<<"Enter the Account Number (5 digits or less): ";
-        cin>>x;
-        accInfo->accNum=x;
-        if(x>9999)                  //Error message if acc# is longer than 5 digits
-           cout<<"Error! Account number is less than 5 digits."<<endl;
-    }while(x>9999);                 //Loop until customer enters valid acc#
-    
+    do{                          
+        cout<<"Enter the Account Number (5 digits): ";
+        cin>>input;
+        if(input>99999||input<10000){//Input Validation
+            cout<<"Error! Account number must be 5 digits."<<endl;
+            cin.clear();
+            cin.ignore();
+        }
+    }while(input>99999||input<10000);//Loop until valid
+   
+    accInfo->accNum=input;          //Store account number 
     cout<<"Enter Beginning Balance: ";
     cin>>(*accInfo).begBal;
-    if(!cin||cin.fail()){         //Input Validation. Must be float >0
+    if(!cin||cin.fail()){           //Input Validation. Must be float >0
           do{
-              cin.clear();        //Clear buffer
+              cin.clear();          //Clear buffer
               cin.ignore();
               cout<<"Invalid Amount! Enter an non-negative numeric amount: ";
               cin>>accInfo->begBal;               
-          }while(!cin||cin.fail());//Continue until valid input
+          }while(!cin||cin.fail()); //Continue until valid input
       }
-    
-    //Get Deposit Information
-    cout<<"Enter All Deposits Made To The Account:"<<endl;
-    do{
-      counter++;                    //Count number of deposits
-      cout<<"Check Amount: ";       
-    do{//Input Validation. hours must be number >0
-        cin>>x;
-        if(!cin||cin.fail()||x<0){
-            cin.clear();
-            cin.ignore();
-            cout<<"Invalid! Enter a positive numeric value: ";
-        }
-    }while(!cin||cin.fail()||x<0); 
-        accInfo->deps+=x;               //Add to total deposits
 
-        do{//Ask for additional deposits
-            cout<<"Enter Another Deposit? Enter y or n: ";
-            cin>>choice;
-            if(choice=='n')             //If no more deposits, end loop
-                break;
-            }while(choice!='y');        //Input validation, must enter n or y
-    }while(choice=='y');                //Continue deposit input until done
-    
-    accInfo->numDeps=counter;           //Store number of deposits
-    counter=0;                          //Reset counter
-    x=0;                                //Reset input variable
-    
-    
-    cout<<"Enter All Checks Written From The Account:"<<endl;
-    do{
-      counter++;                        //Count number of checks
-      cout<<"Check Amount: ";     
+    //Get Deposit Information
+    cout<<"How Many Deposits were made to the account?: ";
+    cin>>accInfo->numDeps;
+    accInfo->deps=new float[accInfo->numDeps];  //Allocate Memory for deposits
+    cout<<"Enter All Deposits Made To The Account:"<<endl;       
+    for(int i=0; i<(*accInfo).numDeps; i++){    //Input validation
         do{//Input Validation. hours must be number >0
-            cin>>x;
-            if(!cin||cin.fail()||x<0){
+            cout<<"Deposit Amount: ";
+            cin>>accInfo->deps[i];              //Store each deposit
+            if(!cin||cin.fail()||accInfo->deps[i]<0){
                 cin.clear();
-                cin.ignore();
+                cin.ignore();                   //Clear buffer
                 cout<<"Invalid! Enter a positive numeric value: ";
             }
-        }while(!cin||cin.fail()||x<0);          
-      accInfo->chks+=x;             //Add to total deposits
-      x=0;                          //Reset input variable
-      do{   
-        cout<<"Enter Another Check? Enter y or n: ";
-        cin>>choice;
-        if(choice=='n')             //If no more deposits, end loop
-            break;
-        }while(choice!='y');        //Input validation, must enter n or y
-    }while(choice=='y');            //Continue check input until customer is done
-    
-    accInfo->numChks=counter;       //Store number of checks written
+            }while(!cin||cin.fail()||accInfo->deps[i]<0); 
+  }
 
-    return accInfo;                 //Return Account Information Structure
-};
+    //Get Check Information
+    cout<<"How Many Checks were written from the account?: ";
+    cin>>(*accInfo).numChks;
+    accInfo->chks=new float[(*accInfo).numChks]; //Allocate Memory for checks
+    cout<<"Enter All Checks Written From The Account:"<<endl;       
+      for(int i=0; i<(*accInfo).numChks; i++){  //Input Validation
+          do{//Input Validation. hours must be number >0
+            cout<<"Check Amount: ";
+            cin>>accInfo->chks[i];              //Store each deposit
+            if(!cin||cin.fail()||accInfo->chks[i]<0){
+                cin.clear();
+                cin.ignore();                   //Clear buffer
+                cout<<"Invalid! Enter a positive numeric value: ";
+            }
+            }while(!cin||cin.fail()||accInfo->chks[i]<0); 
+      }
+    //Return Account Information Structure
+    return accInfo;                 
+}
 
-bool calc(Account *acc, float &bal){
-    bool over=false;                //Flag. Overdrawn=true
-    
+void calc(Account *acc, float &bal, float &totDeps, float &totChks, bool &over){
+   
+    //Total Deposits
+    for (int i=0; i<acc->numDeps; i++){
+        totDeps+=acc->deps[i];
+    }
+
+    //Total Checks
+    for (int i=0; i<acc->numChks; i++){
+        totChks+=acc->chks[i];
+    }
+
     //Total Balance
-    bal=(acc->begBal+acc->deps)-acc->chks;
-    
+    bal+=acc->begBal;
+    bal+=totDeps;
+    bal-=totChks;
+
     //Determine Overdrawn Status
     if (bal<0){
         over=true;
     }
-    return over;
 }
 
-void output(Account *acc, float bal){
+void output(Account *acc, float bal, float totDeps, float totChks, bool over){
+    cout<<"!!!"<<over<<endl;
+    
     cout<<"\t\tACCOUNT INFORMATION:"<<endl;
     cout<<right<<setw(26)<<"Name: "<<left<<(*acc).name<<endl;
     cout<<right<<setw(26)<<"Address: "<<left<<acc->address<<endl;
@@ -154,13 +154,13 @@ void output(Account *acc, float bal){
     cout<<right<<setw(26)<<"\t----------------------------"<<endl;
     cout<<right<<setw(26)<<"# of Deposits: "<<left<<(*acc).numDeps<<endl;
     cout<<right<<fixed<<setprecision(2)<<setw(26)<<"Total Deposits: "
-            <<left<<acc->deps<<endl;
+            <<left<<totDeps<<endl;
     cout<<right<<setw(26)<<"# of Checks Written: "<<left<<(*acc).numChks
             <<endl;
     cout<<right<<fixed<<setprecision(2)<<setw(26)<<"Total Checks: "<<left
-            <<acc->chks<<endl;
+            <<totChks<<endl;
     cout<<right<<setw(26)<<"\t----------------------------"<<endl;
-    if(calc(acc, bal)){
+    if(over==true){
         cout<<right<<setw(26)<<"ACCOUNT OVERDRAWN BY $"<<bal<<":"<<endl;
         cout<<right<<setw(26)<<"$20 Fee Has Been Applied and Debited From"
                 <<" Your Account"<<endl;
@@ -170,4 +170,11 @@ void output(Account *acc, float bal){
         cout<<right<<setw(26)<<"ACCOUNT IN GOOD STANDING"<<endl;
         cout<<right<<setw(26)<<"BALANCE: $"<<bal<<endl;
     }
+}
+
+//Deallocate Memory
+void destroy(Account *acc){
+    delete []acc->deps;
+    delete []acc->chks;
+    delete acc;
 }
