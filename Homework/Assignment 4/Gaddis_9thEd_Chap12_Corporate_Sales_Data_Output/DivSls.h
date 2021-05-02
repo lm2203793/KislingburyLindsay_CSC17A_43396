@@ -1,20 +1,26 @@
 /* 
- * File:   DivSls.h
+ * File:   main.cpp
  * Author: Lindsay Kislingbury
  * Created on April 23, 2021 11:29AM
-    * Purpose: Structure to hold Division Quarterly Sales
+    * Purpose: Corporate Sales Data Output
+ *              Division Sales Structure
  */
-
 #ifndef DIVSLS_H
 #define DIVSLS_H
 
-#include<string>
-
-struct DivSls{ 
-    std::string name;
-    unsigned short qrtr;
-    float sales;
+struct Qtr{
+    unsigned short  qtr;
+    float           amnt;
 };
+
+struct DivSls{
+    char    name[50];
+    Qtr     sales[4];
+};
+
+
+
+
 
 #endif /* DIVSLS_H */
 
