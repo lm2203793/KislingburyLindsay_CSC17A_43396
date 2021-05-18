@@ -11,25 +11,27 @@
 #include <iomanip>  //Format Library
 #include <vector>   //Vector Library
 #include <ctime>    //Time Library
-#include <cctype>   //Character Library
+#include <cctype>
 using namespace std;
+
 
 //User Libraries
 enum Type{NUMBER,SKIP,REVERSE,DRAW2,WILD,WILD4}; //Card Types
-#include "Card.h"    //Card Structure
-#include "Hands.h"   //Hand Structure
+#include "Hands.h"   //Hand and Card Structures
+#include "Scores.h"  //Scores Structure
+
 
 //Function Prototypes
 //Game Setup:
-Hands *setup(vector<Card>&, Card &, int, Hands *);
 vector<Card> filDeck();
-void shuffle(vector<Card> &);
-vector<Card> *deal(vector<Card> &);
+void shuffle(vector<Card> &, Card &);
+Hands *deal(vector<Card> &, int);
 //Play:
 void drawCrd(vector<Card> *, vector<Card> &);
-void playCrd(vector<Card> *, Card &, vector<Card> &, char);
+void playCrd(vector<Card> *, Card &, int);
 void playCrd(vector<Card> *, Card &);
-void display(Card, vector<Card> *);
+void showHnd(vector<Card> *);
+void showCrd(const Card);
 bool valPlay(vector<Card> *, Card);
 bool valPlay(Card, Card);
 void play();
@@ -38,22 +40,27 @@ void prcCard(vector<Card> *, vector<Card> &, Card &);
 bool uno(vector<Card> *, bool);
 
 
+
+
 int main(int argc, char** argv) {
     //Set Random Number Seed
     srand(static_cast<unsigned int>(time(0)));
 
-    //Play Game
+    //Declare Variables
     char strtChc;           //Start menu choice
 
    //Start Menu
     bool error;
-    do{
-        do{cout<<"UNO!"<<endl;
+    do{//Main Program Loop
+        do{
+            //Display Menu Options
+            cout<<"UNO!"<<endl;
             cout<<"1: Play Game\n2: View Scores\nQ: Quit"<<endl;
             cin>>strtChc;
             strtChc=toupper(strtChc);
-            if(strtChc=='1'||strtChc=='2'||strtChc=='Q')error=false;
-            else {
+            if(strtChc=='1'||strtChc=='2'||strtChc=='Q') //Input Validation
+                error=false;
+            else{
                 error=true;
                 cout<<"Invalid Choice!"<<endl;
             }
@@ -81,52 +88,69 @@ int main(int argc, char** argv) {
 /*                               SETUP                                       */
 //FILL DECK
 vector<Card> filDeck(){
+    //Declare Variables:
+    vector<Card> deck;      //Entire deck of cards
     
-    vector<Card> deck;
-    //Zero cards 
-    deck.push_back({NUMBER,0,'r'});
-    deck.push_back({NUMBER,0,'g'});
-    deck.push_back({NUMBER,0,'b'});
-    deck.push_back({NUMBER,0,'y'});
-    //One through Nine
+    //Add Number Cards 
+    //4 Zero Cards: 1 of each color
+    deck.push_back({NUMBER,0,'r',"red",0});
+    deck.push_back({NUMBER,0,'g',"green",0});
+    deck.push_back({NUMBER,0,'b',"blue",0});
+    deck.push_back({NUMBER,0,'y',"yellow",0});
+    //One through Nine: 2 of each color per number
     for(short i=1; i<=9; i++){
-        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'r'});
-        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'g'});
-        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'b'});
-        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'y'});
+        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'r',"red",i});
+        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'g',"green",i});
+        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'b',"blue",i});
+        for(int j=0; j<2; j++) deck.push_back({NUMBER,i,'y',"yellow",i});
     }
-    //Action Cards
-    //Skip
-    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'r'});
-    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'g'});
-    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'b'});
-    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'y'});
-    //Reverse
-    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'r'});
-    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'g'});
-    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'b'});
-    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'y'});
-    //Draw Two
-    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'g'});
-    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'g'});
-    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'b'});
-    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'y'});
-    //Wild
-    for(int j=0; j<4; j++) deck.push_back({WILD,-4,'X'});
-    //Wild Draw Four
-    for(int j=0; j<4; j++) deck.push_back({WILD4,-5,'X'});
+    //Add Action Cards
+    //Skip: 2 of each color
+    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'r',"red",20});
+    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'g',"green",20});
+    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'b',"blue",20});
+    for(int j=0; j<2; j++) deck.push_back({SKIP,-1,'y',"yellow",20});
+    //Reverse: 2 of each color
+    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'r',"red",20});
+    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'g',"green",20});
+    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'b',"blue",20});
+    for(int j=0; j<2; j++) deck.push_back({REVERSE,-2,'y',"yellow",20});
+    //Draw Two: 2 of each color
+    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'r',"red",20});
+    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'g',"green",20});
+    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'b',"blue",20});
+    for(int j=0; j<2; j++) deck.push_back({DRAW2,-3,'y',"yellow",20});
+    //Wild: 4
+    for(int j=0; j<4; j++) deck.push_back({WILD,-4,'X',"X",50});
+    //Wild Draw Four: 4
+    for(int j=0; j<4; j++) deck.push_back({WILD4,-5,'X',"X",50});
     
+    //Return filled deck
     return deck;
-    
 }
 
-//SHUFFLE
-void shuffle(vector<Card> &deck){
+//SHUFFLE AND CREATE DISCARD PILE
+void shuffle(vector<Card> &deck, Card &discard){
+    //Shuffle Cards
     int size=deck.size();
-    for(int i=0; i<size-1; i++) {
+    for(int i=0; i<size; i++) {
       int j=i+rand()%(size-i);
       swap(deck[i], deck[j]);
    }
+    
+    //Flip last card over to start discard pile
+    size--;
+    int counter=1;  //Counter for index of card to swap 
+    if(deck.back().type!=NUMBER){ //If the last card is a special card
+        //Continue swapping last card with the one above it until last 
+        //card is not a special card
+        while(deck[size].type!=NUMBER){ 
+            swap(deck[size],deck[size-counter]);      
+            counter++;
+        }
+    }
+    discard=deck.back();  //Flip the last card over to start discard pile
+    deck.pop_back();      //Remove that card from the deck
 }
 
 //DEAL HANDS
@@ -136,39 +160,42 @@ Hands *deal(vector<Card> &deck, int players){
 
     //Deal player the last 7 cards in the shuffled deck
     for(int p=0; p<players; p++){
-        for(int i=deck.size()-1; i>deck.size()-8; i--){
+        for(int i=deck.size()-1; i>deck.size()-8; i--)
             hands[p].data.push_back(deck[i]);
-        }
         //Remove those cards from the deck
-        for(int i=0; i<7; i++){
+        for(int i=0; i<7; i++)
             deck.pop_back();
-        }
     }
+    //Return pointer to array of player hands
     return hands;
 }
 
-
-//DRAW
+//DRAW CARD
 void drawCrd(vector<Card> *cards, vector<Card> &draw){
-    //Add a card from the draw pile to the player's hand
-    cards->push_back(draw.back());
+    //Declare temporary Card variable to hold card being added
+    Card add=draw.back(); //Card to be added is the last card in draw pile
+    
+    //Add the card to player's hand
+    cards->push_back(add);
     //Remove that card from the draw pile
     draw.pop_back();
     //Display the card player drew
     cout<<"You Drew: ";
-    if(cards->back().type==NUMBER) cout<<cards->back().num;
-    else cout<<cards->back().type;
-    if(cards->back().type!=WILD||WILD4) cout<<cards->back().color;
+    switch(add.type){
+        case(NUMBER): cout<<add.num<<" "<<add.colName; break;
+        case(SKIP): cout<<"SKIP "<<add.colName<<endl; break;
+        case(REVERSE): cout<<"REVERSE "<<add.colName<<endl; break;
+        case(DRAW2): cout<<"DRAW-2 "<<add.colName<<endl; break;
+        case(WILD): cout<<"WILD "<<endl; break;
+        case(WILD4): cout<<"WILD-DRAW-4 "<<endl; break;
+    }       
    cout<<"    ";
 }
-//PLAY A CARD with choices
-void playCrd(vector<Card> *cards, Card &discard, vector<Card> &draw, char chc){
-    bool valid;     //Is the play valid
-    int cardChc=static_cast<int>(chc -'0');
-    Card card;
-    Card debug_card;
+//PLAY A CARD with card choices
+void playCrd(vector<Card> *cards, Card &discard, int cardChc){
+    Card card;  //Temporary card variable to hold the card chosen
+    Card debug_card;//***DEBUG
     //Player Chooses a Card
-    do{ 
         /////////////////////////DEBUG////////////////////////////////////
         if(cardChc==-1){
             int x;
@@ -184,27 +211,18 @@ void playCrd(vector<Card> *cards, Card &discard, vector<Card> &draw, char chc){
             cin>>debug_card.color;
             card=debug_card;
         }
-        else card=cards->at(cardChc);
+        else card=cards->at(cardChc); 
 
         //Check If The Play Is Valid
-        valid=valPlay(card, discard);
-        if(valid){
             //Put Played Card on Top of Discard Pile
             discard=card;
             //Take Played Card Out of Player's Hand
             /////////////////////////DEBUG//////////////////////
             if(cardChc!=-1)
                 cards->erase(cards->begin()+cardChc);
-        }
-        else{
-            //Display Error Message
-            cout<<"You must choose a card of the same color, "<<
-                    "number, or type!"<<endl;
-        }
-    }while(!valid); //Loop Until Valid Card Is Played
 }
 
-//play the card just drawn
+//PLAY A CARD play the card just drawn
 void playCrd(vector<Card> *hand, Card &discard){
     //Put Played Card on Top of Discard Pile
     discard=hand->back();
@@ -212,171 +230,236 @@ void playCrd(vector<Card> *hand, Card &discard){
     hand->pop_back();
 }
 
-//DISPLAY HAND
-void display(Card discard, vector<Card> *cards){
-    //Show Discard 
-    cout<<"Discard:"<<endl;
-    if(discard.type==NUMBER) cout<<discard.num<<" "<<discard.color<<endl;
+//DISPLAY A CARD
+void showCrd(const Card card){
+    //If the card is a number card, display number and color
+    if(card.type==NUMBER) cout<<card.num<<" "<<card.colName<<endl;
+    //Else display type and color
     else{
-        switch(discard.type){
-            case(SKIP): cout<<"SKIP "<<discard.color<<endl; break;
-            case(REVERSE): cout<<"REVERSE "<<discard.color<<endl; break;
-            case(DRAW2): cout<<"DRAW-2 "<<discard.color<<endl; break;
-            case(WILD): cout<<"WILD "<<endl; break;
-            case(WILD4): cout<<"WILD-DRAW-4 "<<endl; break;
+        switch(card.type){
+            case(SKIP): cout<<"SKIP "<<card.colName<<endl; break;
+            case(REVERSE): cout<<"REVERSE "<<card.colName<<endl; break;
+            case(DRAW2): cout<<"DRAW-2 "<<card.colName<<endl; break;
+            case(WILD): cout<<"WILD "<<card.colName<<endl; break;
+            case(WILD4): cout<<"WILD-DRAW-4 "<<card.colName<<endl; break;
         }
-    }
-    
-    //Show Your Hand
-    cout<<"Your Hand:"<<endl;
-    for(int i=0; i<cards->size(); i++){
-        switch(cards->at(i).type){
-            case(NUMBER):
-                cout<<i<<": "<<cards->at(i).num<<" "<<cards->at(i).color<<"   ";
-                break;
-            case(DRAW2):
-                cout<<i<<": "<<"DRAW-2 "<<cards->at(i).color<<"   ";
-                break;
-            case(SKIP):
-                cout<<i<<": "<<"SKIP "<<cards->at(i).color<<"   ";
-                break;
-            case(REVERSE):
-                cout<<i<<": "<<"REVERSE "<<cards->at(i).color<<"   ";
-                break;
-            case(WILD):
-                cout<<i<<": "<<"WILD   ";
-                break;
-            case(WILD4):
-                cout<<i<<": "<<"WILD-DRAW-4   ";
-                break;    
+    }  
+}
+
+//DISPLAY PLAYER'S HAND
+void showHnd(vector<Card> *cards){
+    cout<<"Enter the # that corresponds to your choice:"<<endl;
+    for(int i=0; i<cards->size(); i++){//Loop on Player's hand size
+        cout<<right;
+        cout<<setw(3)<<i<<setw(2)<<": ";
+        cout<<left;
+        //If the card is a number card, display number and color
+        if(cards->at(i).type==NUMBER){
+            cout<<setw(2)<<"[  "<<left<<setw(2)<<cards->at(i).num<<right<<setw(6)
+                    <<cards->at(i).colName<<setw(3)<<"   ]";
         }
+        //Else display type and color
+        else{     
+            if(cards->at(i).type==SKIP){
+                cout<<left<<setw(1)<<"["<<setw(7)<<"SKIP"<<right<<setw(6)
+                        <<cards->at(i).colName<<setw(1)<<"]";
+            }
+            else if(cards->at(i).type==REVERSE){
+                cout<<left<<setw(1)<<"["<<setw(7)<<"REVERSE"<<right<<setw(6)
+                        <<cards->at(i).colName<<setw(1)<<"]";
+            }
+            else if(cards->at(i).type==DRAW2){
+                cout<<left<<setw(1)<<"["<<setw(7)<<"DRAW-2"<<right<<setw(6)
+                        <<cards->at(i).colName<<setw(1)<<"]";
+            }
+            else if(cards->at(i).type==WILD)
+                cout<<"[    WILD     ]";
+            else if(cards->at(i).type==WILD4)
+                cout<<"[  WILD-DRAW-4]";
+        }
+        if((i+1)%2==0)cout<<endl;
     }
     cout<<endl;
 }
 
 void play(){
     //Declare Variables
-    bool endgame;           //running game=true
-    bool error;             //input validation
-    Hands *hands;           //Pointer to an array of player hand vectors
-    vector<Card> draw;      //Draw Pile
-    vector<Card> deck;      //The Entire Deck of Cards
-    Card discard;           //Discard Pile
-    int players;            //Number of players
-    int curPlyr=0;          //current player
-    bool canPlay;           //does player have a valid card to play
-    char cont;              //input to continue
-    int cardChc;            //card choice
-    char chc;               //Enter player choice to call uno or play a card
-    bool unoFlag;          //flag, player called uno=true
-    vector<Card> *handPtr;  //Pointer to current player's hand
-    bool trnOver;
+    Hands           *hands;    //Pointer to an array of player hand vectors
+    vector<Card>    *handPtr;  //Pointer to current player's hand   
+    vector<Card>    draw,      //Draw Pile
+                    deck;      //The Entire Deck of Cards
+    Card            discard;   //Discard Pile
+    int             players,   //Number of players
+                    curPlyr,   //Current player
+                    cardChc;   //Card choice
+    char            cont,      //User input to continue after message
+                    chc;       //Player choice to call uno or play a card
+    bool            unoFlag,   //Flag, if player called uno
+                    endgame,   //Flag, if game is running endgame=false
+                    error,     //Flag for input validation
+                    canPlay,   //Flag if player has a playable card 
+                    trnOver;   //Flag, if turn is over=true
+    string          name;      //Hold user input for player name
     
-    //Get # of Players
-    cout<<"How many players? (Up to 4)"<<endl;
+    
+    //Initialize Variables
+    players=0, curPlyr=0, cardChc=0;
+    endgame=false, error=false, canPlay=false, unoFlag=false, trnOver=false;
+    
+    //Get # of Players:
     do{
-        cin>>players;
-        if(players<=10&&players>=2)error=false;
-        else{
-            cout<<"Invalid!"<<endl;
-            error=true;
-        }
+        cout<<"How many players? (Up to 4)"<<endl;
         cin.clear();
-    }while(error||!cin||cin.fail());
+        cin.ignore();
+        error=false;                //Set error to False
+        cin>>players;               //Get # of players 
+        if(players<=10&&players>=2) //If >10 or <2
+            error=false;                //error=false
+        else{                       //else
+            cout<<"Invalid!"<<endl;     //display message
+            error=true;                 //error=true
+        }
+    }while(error||!cin||cin.fail());//continue until user enters valid # 
+    
 
+    //Allocate Memory for array of player scores
+    Scores *scores=new Scores[players];
+    GameScrs *gameScrs=new GameScrs[players];
+    
     //Setup Cards:
-    deck=filDeck();                  //Fill the deck
-    shuffle(deck);                  //Shuffle the deck
-    hands=deal(deck, players);      //Deal Player hands
-    discard=(deck.back());          //Create discard pile
-    deck.pop_back();                //Remove that card from the deck
+    deck=filDeck();                 //Fill the deck
+    shuffle(deck,discard);          //Shuffle the deck
+    hands=deal(deck, players);      //Allocate Memory and deal Player hands
             
     //Get Player Names:
-    string name;
-    cin.ignore();
-    for(int i=0; i<players; i++){
+    cin.ignore();                           //Clear buffer
+    for(int i=0; i<players; i++){           //Loop on # of players
         cout<<"Enter Player "<<i+1<<"'s Name: ";
-        getline(cin, name);
-        hands[i].player=name;
+        getline(cin, name);                 //Get name
+        hands[i].player=name;               //Store name in player's hand
+        ////////////////////COMEBACKTOTHIS///////////////////////////
+       // records->scores[i]->player=name;    //Store name in scores record   
     }
     
-    for(int i=0; i<deck.size(); i++){//Fill Draw Pile
+    //Fill Draw Pile
+    for(int i=0; i<deck.size(); i++){
         draw.push_back(deck[i]);
     }
-    for(int i=0; i<draw.size(); i++){//Remove those cards from the deck
+    //Remove cards added to the draw pile from the deck
+    for(int i=0; i<draw.size(); i++){
         deck.pop_back();
     }
     
     do{//Main Game Loop
         do{//Player Turn Loop
-            handPtr=&(hands[curPlyr].data);
-            prcCard(handPtr, draw, discard);
+            hands[curPlyr].hndSzs.push_back(hands[curPlyr].data.size());
+            cout<<"added "<<hands[curPlyr].data.size()<<" to hand sizes"<<endl;
+            //Set pointer to current player hand
+            handPtr=&(hands[curPlyr].data); 
+            //Process special cards played that affect current player
+            prcCard(handPtr, draw, discard); 
             cout<<hands[curPlyr].player<<"'s TURN!"<<endl;
-            //Get current Player's hand
             //Check if the player can play a card
             canPlay=valPlay(handPtr,discard);
             //Check if the player can call uno
             unoFlag=uno(handPtr,canPlay);
-            //
-            do{
-                //Display discard pile and player hand
-                display(discard,handPtr);
-                cout<<"Enter u To Call UNO or Choose a card to play: "<<endl;
-                cin>>chc;
-                if(chc=='u'){//Player calls Uno
-                    if(unoFlag){//Player has Uno
-                        cout<<"UNO!!!!"<<endl;//Display UNO!
-                    }
-                    else{//Player does not have Uno
-                        if(hands[curPlyr].data.size()>2){//Player has more than two cards
-                            cout<<"You still have "<<hands[curPlyr].data.size()
-                                    <<" cards! NO UNO!"<<endl;//Display message
+            //Display the current discard
+            cout<<"Discard: ";
+            showCrd(discard);
+            //Display current player's hand
+            cout<<hands[curPlyr].player<<"'s HAND:"<<endl;
+            showHnd(handPtr);
+            //Display message, ask if player wants to call uno
+            cout<<"Enter u To Call UNO or any other key to continue: "<<endl;
+            //Get uno choice
+            cin>>chc;
+            if(chc=='u'){//If Player calls Uno
+                if(unoFlag){//If Player has Uno
+                    cout<<"UNO!!!!"<<endl;//Display message
+                }
+                else{//If Player does not have Uno
+                    if(hands[curPlyr].data.size()>2){//If Player has > two cards
+                        cout<<"You still have "<<hands[curPlyr].data.size()
+                            <<" cards! NO UNO!"<<endl;//Display message
                         }
-                        if(!canPlay){//Player has no playable cards
-                            cout<<"You don't have a playable card! NO UNO!"<<endl;//Display message
-                        }
+                    if(!canPlay){//If Player has no playable cards
+                        cout<<"You don't have a playable card!"
+                                <<"NO UNO!"<<endl;//Display message
                     }
                 }
-                else{
-                    if(unoFlag){
-                        cout<<"You didn't call UNO! Draw 2 cards!"<<endl;
-                        for(int i=0; i<2; i++) drawCrd(handPtr,draw);
-                    }
-                   if(canPlay){//Play A Card
-                        playCrd(handPtr, discard, draw, chc);
-                        trnOver=true;
-                    }
-                    else{//Draw A Card
-                        do{
-                            cout<<"No Valid Card to Play!"<<endl;
-                            cout<<"Type x To Draw A Card"<<endl;
+            }
+            else if(unoFlag&&chc!='u'){ //If Player doesn't call uno and has uno
+                    cout<<"You didn't call UNO! Draw 2 cards!"<<endl; //Message
+                    for(int i=0; i<2; i++)  //Draw 2 Cards
+                        drawCrd(handPtr,draw);
+                    unoFlag=false;          //unoFlag=false
+                }
+            do{//Play Card Loop
+                cin.clear();
+                if(unoFlag&&chc!='u'){
+                    cout<<"You didn't call UNO! Draw 2 cards!"<<endl;
+                    for(int i=0; i<2; i++) drawCrd(handPtr,draw);
+                    unoFlag=false;
+                }
+               if(canPlay){//Play A Card
+                   do{                  //Input Validation Loop 
+                       error=false;     //Reset Input Validation Flag
+                       cin.clear();
+                       cin.ignore();
+                       cout<<"What card do you want to play?"<<endl;
+                       cin>>cardChc;
+                       if(cardChc<0||cardChc>hands[curPlyr].data.size()-1
+                               ||!cin||cin.fail()){
+                           error=true;
+                           cout<<"Invalid Choice!"<<endl;
+                       }
+                   }while(!cin||cin.fail()||error);
+
+                   //validate play here
+                   if(valPlay(hands[curPlyr].data[cardChc], discard)){
+                       playCrd(handPtr, discard, cardChc);
+                       trnOver=true;
+                   }
+                   else{
+                       cout<<"Not a Valid Card!"<<endl;
+                       trnOver=false;
+                   }
+                }
+                else{//Draw A Card if no valid cards in your hand
+                    do{
+                        cout<<"No Valid Card to Play!"<<endl;
+                        cout<<"Enter any key to continue"<<endl;
+                        cin>>cont;
+                        //Draw A Card
+                        drawCrd(handPtr, draw);
+                        //Check If The Card Just Drawn Can Be Played
+                        canPlay=valPlay(handPtr, discard);
+                        if(canPlay){
+                            //Play The Card
+                            cout<<"Enter any key to Play it"<<endl;
                             cin>>cont;
-                            //Draw A Card
-                            drawCrd(handPtr, draw);
-                            //Display The Card Just Drawn
-                            cout<<"You drew: ";
-                            cout<<hands[curPlyr].data.back().num;
-                            cout<<hands[curPlyr].data.back().color<<endl;
-                            //Check If The Card Just Drawn Can Be Played
-                            canPlay=valPlay(handPtr, discard);
-                            if(canPlay){
-                                //Play The Card
-                                cout<<"Type x to Play it"<<endl;
-                                cin>>cont;
-                                playCrd(handPtr, discard);
-                                trnOver=true;
-                            }
-                        }while(!canPlay);
-                    }
-                }   
+                            playCrd(handPtr, discard);
+                            trnOver=true;
+                        }
+                    }while(!canPlay);
+                }
+                if(hands[curPlyr].data.size()==0){
+                    cout<<"END GAME!!"<<endl;
+                    cout<<hands[curPlyr].player<<" WINS!!!!"<<endl;
+                    endgame=true;
+                }
             }while(!trnOver);  
-        }while(error);//input validation);
+        }while(error);//input validation
         curPlyr=setPlyr(discard, curPlyr, players);
     }while(!endgame);
     
     
+
+    
+    
     //clean up
     delete []hands;
+    //delete []scores;
 }
 
 //Set the current player at the start of the turn
@@ -426,7 +509,7 @@ bool valPlay(Card card, Card discard){
         else valid=false;//Set Valid to False
     }
     //Special Card is played
-    if(card.type!=NUMBER){
+    if(card.type==SKIP||card.type==REVERSE||card.type==DRAW2){
         //Card played matches discard type or color
         if(card.type==discard.type
                 ||card.color==discard.color){
@@ -434,6 +517,9 @@ bool valPlay(Card card, Card discard){
         }
         //Card played does not match discard type or color
         else valid=false;//Set Valid to False
+    }
+    if(card.type==WILD||card.type==WILD4){
+        valid=true;
     }
 
     //Return valid status of card played
@@ -444,6 +530,7 @@ bool valPlay(Card card, Card discard){
 bool valPlay(vector<Card> *cards, Card discard){
     bool valid=false; //Player has a card that can be played=true
     
+    //Loop on size of player's hand
     for(int i=0; i<cards->size(); i++){
         //Check Number Cards
         if(cards->at(i).type==NUMBER){
@@ -460,6 +547,10 @@ bool valPlay(vector<Card> *cards, Card discard){
                 break;      //Stop Looking
             }
         }
+        if(cards->at(i).type==WILD||cards->at(i).type==WILD4){
+            valid=true;
+            break;
+        }
     }
     
     //Return valid status of player's hand
@@ -470,7 +561,7 @@ bool valPlay(vector<Card> *cards, Card discard){
 //Change Color when Wilds are played
 void prcCard(vector<Card> *cards, vector<Card> &draw, Card &discard){
     char colChc;
-    
+    bool error=false;
     switch(discard.type){ //Switch on card type
         case(DRAW2):      //Draw Two
             for(int i=0; i<2; i++){ 
@@ -480,18 +571,46 @@ void prcCard(vector<Card> *cards, vector<Card> &draw, Card &discard){
                  
             break;
         case(WILD):     //Wild
-            cout<<"Choose A Color (r,g,b,y): ";//Change discard color
-            cin>>colChc;
+            do{
+                cout<<"Choose A Color (r,g,b,y): ";//Change discard color
+                cin.clear();
+                cin.ignore();
+                cin>>colChc;
+                if(colChc=='r'||colChc=='g'||colChc=='b'||colChc=='y'){
+                    cout<<"Invalid Choice!"<<endl;
+                    error=false;
+                }
+                else error=true;
+            }while(!cin||cin.fail()||error);
+            colChc=tolower(colChc);
             discard.color=colChc;
+            if(colChc=='r') discard.colName="red";
+            else if(colChc=='g') discard.colName="green";
+            else if(colChc=='b') discard.colName="blue";
+            else if(colChc=='y') discard.colName="yellow";
              break;
         case(WILD4):    //Wild Draw Four
             for(int i=0; i<4; i++){          
                 cards->push_back(draw.back());//Add Four Cards to player's hand
                 draw.pop_back();             //Remove those cards from draw pile        
             }
-            cout<<"Choose A Color (r,g,b,y): ";//Player chooses new discard color
-            cin>>colChc;                        
-            discard.color=colChc;      
+            do{
+                cout<<"Choose A Color (r,g,b,y): ";//Player chooses new discard color
+                cin.clear();
+                cin.ignore();
+                cin>>colChc;
+                if(colChc=='r'||colChc=='g'||colChc=='b'||colChc=='y'){
+                    cout<<"Invalid Choice!"<<endl;
+                    error=false;
+                }
+                else error=true;
+            }while(!cin||cin.fail()||error); 
+            colChc=tolower(colChc);
+            discard.color=colChc;
+            if(colChc=='r') discard.colName="red";
+            else if(colChc=='g') discard.colName="green";
+            else if(colChc=='b') discard.colName="blue";
+            else if(colChc=='y') discard.colName="yellow";
             break;
     }
 }
@@ -512,3 +631,47 @@ bool uno(vector<Card> *cards, bool canPlay){
 }
 /*****************************************************************************/
 /*                               SCORES                                       */
+Scores *calcScrs(Hands *hands, int players, Scores *scores){
+
+
+    int score=0;
+
+    for(int p=0; p<players; p++){//Loop on players
+        for(int h=0; h<hands[p].data.size(); h++){ //Loop on hand size
+            score+=hands[p].data[h].points;
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+unsigned short lrgHnd(Hands *hands){
+    unsigned short max=0;     //Set max to 0 
+    for(int i=0; i<hands->hndSzs->size(); i++){//Get the Maximum Value
+        if(max<hands->hndSzs->at(i)){
+            max=hands->hndSzs->at(i);//Swap with higher value
+        }
+    }
+    return max;
+}
+
+//get scores
+
+
+void *fillScr(Scores *scores, Hands *hands, int players){
+    for(int i=0; i<players; i++){
+        scores[i].lrgHnd=lrgHnd(hands);
+        
+    }
+}
+ * */

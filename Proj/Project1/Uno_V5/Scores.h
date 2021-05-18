@@ -11,13 +11,27 @@
  * Created on May 13, 2021, 3:28 PM
  */
 
+
+
 #ifndef SCORES_H
 #define SCORES_H
+#include <string>
+
+struct GameScrs{
+    int             gmNum;
+    int             gmScr;
+    int             lrgHnd;
+    vector<int>     hndSzs;
+};
 
 struct Scores{
-    char                plyrName;
-    unsigned short      highScr;
-    unsigned short      *allScrs;
+    string              player;
+    int                 nWins,
+                        nLoses,
+                        highScr,
+                        avgScr,
+                        nGames,
+                        highHnd;
     
 };
 

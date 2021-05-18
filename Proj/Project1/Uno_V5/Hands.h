@@ -14,9 +14,18 @@
 #ifndef HANDS_H
 #define HANDS_H
 
-struct Hands{
-    vector<Card>    data;     //Data in the array
-    string          player;
+struct Card{
+    Type            type;
+    short           num;
+    char            color;
+    string          colName;
+    int             points;
+};
+
+struct Player{
+    vector<Card>   data;     //hand of cards
+    string         player;
+    GameScrs       scores;
 };
 
 #endif /* HANDS_H */

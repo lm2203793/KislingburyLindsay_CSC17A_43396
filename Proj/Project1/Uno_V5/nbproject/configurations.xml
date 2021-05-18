@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Card.h</itemPath>
       <itemPath>Hands.h</itemPath>
       <itemPath>Scores.h</itemPath>
     </logicalFolder>
@@ -38,9 +37,13 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <standard>10</standard>
+        </cTool>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
       </compileType>
-      <item path="Card.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Hands.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Scores.h" ex="false" tool="3" flavor2="0">
@@ -68,8 +71,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Card.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Hands.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Scores.h" ex="false" tool="3" flavor2="0">
