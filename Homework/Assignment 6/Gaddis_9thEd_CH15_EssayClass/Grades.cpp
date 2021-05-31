@@ -3,7 +3,7 @@
  * Author: Lindsay Kislingbury
  * Purpose: Grades Class Member Function Definition
  *          ltrGrade() assigns a letter grade to an assignment
- * Created on May 30, 2021, 7:06 PM
+ * Created on May 28, 2021, 7:06 PM
  */
 #include "Grades.h"
 

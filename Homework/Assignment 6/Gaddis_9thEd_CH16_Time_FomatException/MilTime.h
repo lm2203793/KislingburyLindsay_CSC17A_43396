@@ -56,11 +56,8 @@ class MilTime : public Time{
         }
         
         //Convert
-        void cnv();
-            
+        void cnv(); //Defined in MilTime.cpp
 };
-
-
 
 #endif /* MILTIME_H */
 

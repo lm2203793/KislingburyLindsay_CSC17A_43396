@@ -3,7 +3,7 @@
  * Author: Lindsay Kislingbury
  * Purpose: Gaddis 9thED Ch15 Problem #1
  *          Demonstrates Derived Class
- * Created on May 28, 2021, 5:24 PM
+ * Created on May 26, 2021, 12:14 PM
  */
 
 #include <cstdlib>

@@ -2,7 +2,7 @@
  * File:   MilTime.h
  * Author: Lindsay Kislingbury
  * Purpose: MilTime Class Specification
- * Created on May 30, 2021
+ * Created on May 29, 2021
  */
 
 #ifndef MILTIME_H
@@ -12,20 +12,16 @@
 class MilTime : public Time{
     private:
         char *milHrs;     //24hr military time format
-        int  milSecs;        //seconds in standard format
+        int  milSecs;     //seconds in standard format
     public:
         //Default Constructor
         MilTime(char *hrs, int sec):Time(){
             milHrs=hrs;
             milSecs=sec;
         }
-        
         //Convert
-        void cnv();
-            
+        void cnv();        
 };
-
-
 
 #endif /* MILTIME_H */
 

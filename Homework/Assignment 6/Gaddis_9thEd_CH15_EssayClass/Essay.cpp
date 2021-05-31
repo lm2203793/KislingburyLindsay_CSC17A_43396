@@ -4,7 +4,7 @@
  * Purpose: Essay Class Member Function Definition
  *          set function adds points for all categories
  *          and passes the score to Grades setscore() function
- * Created on May 30, 2021, 7:06 PM
+ * Created on May 28, 2021, 7:06 PM
  */
 #include "Essay.h"
 

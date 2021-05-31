@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Lindsay Kislingbury
  * Purpose: Time Class Specification
- * Created on May 30, 2021, 6:32 PM
+ * Created on May 29, 2021, 6:32 PM
  */
 #ifndef TIME_H
 #define TIME_H

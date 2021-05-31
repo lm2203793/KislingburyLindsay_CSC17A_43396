@@ -3,7 +3,7 @@
  * Author: Lindsay Kislingbury
  * Purpose: ProWrkr Class Specification
  *          ProWrkr is derived from Employee Class
- * Created on May 30, 2021, 3:03 PM
+ * Created on May 26, 2021, 3:03 PM
  */
 
 #ifndef PROWRKR_H

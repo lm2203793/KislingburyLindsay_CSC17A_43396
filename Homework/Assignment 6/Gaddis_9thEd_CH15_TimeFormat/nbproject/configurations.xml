@@ -14,6 +14,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>MilTime.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -38,6 +39,8 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="MilTime.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="MilTime.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Time.h" ex="false" tool="3" flavor2="0">
@@ -65,6 +68,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="MilTime.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="MilTime.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Time.h" ex="false" tool="3" flavor2="0">

@@ -61,7 +61,6 @@ int main(int argc, char** argv) {
     cout<<"Converted to Standard Time, that is:"<<endl;
     cout<<input.getHour()<<":"<<input.getMin()<<":"<<input.getSec()
         <<" "<<input.getAmPm()<<endl;
-
     
     return 0;
 }

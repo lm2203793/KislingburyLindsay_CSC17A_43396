@@ -2,7 +2,7 @@
  * File:   Essay.h
  * Author: Lindsay Kislingbury
  * Purpose: Essay Class Specification
- * Created on May 30, 2021, 7:06 PM
+ * Created on May 28, 2021, 7:06 PM
  */
 
 #ifndef ESSAY_H

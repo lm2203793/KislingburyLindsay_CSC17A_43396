@@ -2,7 +2,9 @@
  * File:   MilTime.h
  * Author: Lindsay Kislingbury
  * Purpose: convert military time to standard time
- * Created on May 30, 2021
+ *          **NOT MUCH INPUT VALIDATION, BETTER INPUT VALIDATION
+ *            IN IMPROVED CH16 VERSION WITH EXCEPTIONS
+ * Created on May 29, 2021
  */
 
 #include <cstdlib>
@@ -50,7 +52,6 @@ int main(int argc, char** argv) {
         cout<<input.getHour()<<":"<<input.getMin()<<":"<<input.getSec()
             <<" "<<input.getAmPm()<<endl;
 
-    
     return 0;
 }
 

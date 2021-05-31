@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Gaddis_9thEd_CH15_Time_Fomat
+PROJECTNAME=Gaddis_9thEd_CH16_Time_FomatException
 
 # Active Configuration
 DEFAULTCONF=Debug

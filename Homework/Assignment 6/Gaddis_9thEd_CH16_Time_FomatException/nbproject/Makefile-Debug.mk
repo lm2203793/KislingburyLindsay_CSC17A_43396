@@ -57,11 +57,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_9thed_ch15_time_fomat.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_9thed_ch16_time_fomatexception.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_9thed_ch15_time_fomat.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_9thed_ch16_time_fomatexception.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_9thed_ch15_time_fomat ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/gaddis_9thed_ch16_time_fomatexception ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/MilTime.o: MilTime.cpp
 	${MKDIR} -p ${OBJECTDIR}
