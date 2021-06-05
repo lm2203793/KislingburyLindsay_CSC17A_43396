@@ -421,6 +421,7 @@ void showCrd(const Card card){
 
 //DISPLAY PLAYER'S HAND
 void showHnd(vector<Card> *cards){
+    
     for(int i=0; i<cards->size(); i++){//Loop on Player's hand size
         cout<<right;
         cout<<setw(3)<<i<<setw(2)<<": ";
@@ -551,7 +552,7 @@ void prcCard(vector<Card> *cards, vector<Card> &draw, Card &discard){
         case(DRAW2)://Draw Two
             for(int i=0; i<2; i++){ 
                 cards->push_back(draw.back());//Add Two Cards to Player's hand
-                draw.pop_back();             //Remove those cards from draw pile 
+                draw.pop_back();              //Remove those cards from draw pile 
             }   
             break;
         case(WILD)://Wild
