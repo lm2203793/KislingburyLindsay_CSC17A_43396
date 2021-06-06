@@ -11,13 +11,14 @@ using namespace std;
 
 Card Cplayer::getPcrd(Card disCrd){
     Card temp;
+    int vecSz=0;
     vector<int> valCrds;   //valid cards indexes
     for(int i=0; i<hand.size(); i++){
         if(valPlay(disCrd,hand[i])){
             valCrds.push_back(i);
+            vecSz++;
         }
     }
-
     switch(hardNum){ //switch on difficulty
         case 1: //completely random valid card
             int index;
@@ -31,7 +32,8 @@ Card Cplayer::getPcrd(Card disCrd){
             if(coin==1){
                 int *sScrs;
                 scoreSym(sScrs); //determine value of each symbol (# or special card) and store in array
-                int *tots=scrCrdsN(valCrds, sScrs); //determine value of each valid card in the hand and store in array
+                int *tots;
+                scrCrdsN(valCrds, sScrs, tots, vecSz); //determine value of each valid card in the hand and store in array
                 int smax=0; 
                 //find max card value
                 for(int i=0; i<sizeof(tots); i++){
@@ -44,7 +46,8 @@ Card Cplayer::getPcrd(Card disCrd){
             else{
                 int *cScrs;
                 scoreClr(cScrs); //determine value of each color and store in array
-                int *tots=scrCrdsC(valCrds, cScrs); //determine value of each valid card in the hand and store in array
+                int *tots;
+                scrCrdsC(valCrds, cScrs, tots, vecSz); //determine value of each valid card in the hand and store in array
                 int cmax=0; 
                 //find max card value
                 for(int i=0; i<sizeof(tots); i++){
@@ -60,8 +63,10 @@ Card Cplayer::getPcrd(Card disCrd){
             scoreSym(sScrs); //determine value of each symbol (# or special card) and store in array
             int *cScrs;
             scoreClr(cScrs); //determine value of each color and store in array
-            int *ctots=scrCrdsC(valCrds, cScrs); //determine value of each valid card in the hand and store in array
-            int *stots=scrCrdsN(valCrds, sScrs); //determine value of each valid card in the hand and store in array
+            int *ctots;
+            scrCrdsC(valCrds, cScrs, ctots, vecSz); //determine value of each valid card in the hand and store in array
+            int *stots;
+            scrCrdsN(valCrds, sScrs, stots, vecSz); //determine value of each valid card in the hand and store in array
             int ttots[sizeof(ctots)]={0}; //all totals
             //add the color and symbol totals to all totals
             for(int i=0; i<sizeof(ctots); i++){
@@ -162,55 +167,56 @@ void Cplayer::scoreClr(int *colNums){
     }
 }
 //build a score for every in card in vector of valid cards
-int* Cplayer::scrCrdsN(vector<int> valCrds, int *scrsN){
-    int totals[valCrds.size()]={0};
+void Cplayer::scrCrdsN(vector<int> valCrds, int *scrsN, int *symTots, int vecSz){
+    int temp[vecSz];
+    symTots=temp;
     for(int i=0; i<valCrds.size(); i++){
         Type type=hand[valCrds[i]].getType();
          if(type!=NUMBER){
             switch(type){
                 case DRAW2:
-                    totals[i]=scrsN[11];
+                    symTots[i]=scrsN[11];
                     break;
                 case SKIP:
-                    totals[i]=scrsN[12];
+                    symTots[i]=scrsN[12];
                     break;
                 case REVERSE:
-                    totals[i]=scrsN[13];
+                    symTots[i]=scrsN[13];
                     break;
                 case WILD: //only play as last resort
                 case WILD4:
-                    totals[i]=0;
+                    symTots[i]=0;
                     break;
             }
        }
        else{
-           totals[i]=scrsN[hand[valCrds[i]].getNum()];
+           symTots[i]=scrsN[hand[valCrds[i]].getNum()];
         }
     }
 }
 
 //build a score for every in card in vector of valid cards
-int* Cplayer::scrCrdsC(vector<int> valCrds, int *scrsC){
-    int totals[valCrds.size()]={0};
+void Cplayer::scrCrdsC(vector<int> valCrds, int *scrsC, int *colTots, int vecSz){
+    int temp[vecSz];
+    colTots=temp;
     for(int i=0; i<valCrds.size(); i++){
         char col=hand[valCrds[i]].getColor();
         switch(col){
             case 'r':
-                totals[i]=scrsC[0];
+                colTots[i]=scrsC[0];
                 break;
             case 'g':
-                totals[i]=scrsC[1];
+                colTots[i]=scrsC[1];
                 break;
             case 'b':
-                totals[i]=scrsC[2];
+                colTots[i]=scrsC[2];
                 break;
             case 'y':
-                totals[i]=scrsC[3];
+                colTots[i]=scrsC[3];
                 break;
             case 'X':
-                totals[i]=0;
+                colTots[i]=0;
                 break;
         }
     }
-    return scrsC;
 }
