@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Lindsay Kislingbury
  * Purpose: UNO V13
- *          ///
+ *          //redid everything. now it works better. also classes make sense
  * Created on June 2, 2021, 8:07 PM
  */
 //System Libraries
@@ -68,6 +68,8 @@ int main(int argc, char** argv) {
     }
     
     
+    
+    
 
     //play game
     do{//Main Game Loop
@@ -96,46 +98,29 @@ int main(int argc, char** argv) {
             uno(plyrPtr, deck, unoChc, cPlay);
             do{//Play Card Loop
                 cin.clear();
-               if(cPlay){  //Play A Card
-                   do{                  //Input Validation Loop 
-                       error=false;     //Reset Input Validation Flag
-                       cin.clear();
-                       cin.ignore();
-                       cout<<"What card do you want to play?"<<endl;
-                       cin>>cardChc;
-                       if(cardChc<0||cardChc>plyrPtr->getHndSz()-1
-                               ||!cin||cin.fail()){
-                           error=true;
-                           cout<<"Invalid Choice!"<<endl;
-                       }
-                   }while(!cin||cin.fail()||error);
-                   //Validate Play
-                   if(valPlay(plyrPtr,deck, cardChc)){
-                       plyrPtr->playCard(cardChc, deck);              //play card
-                       trnOver=true;
-                   }
-                   else{
-                       cout<<"Not a Valid Card!"<<endl;
-                       trnOver=false;
-                   }
+                if(cPlay){  //Play A Card
+                    deck.chngDisc(plyrPtr->getPcrd(deck.getDis()));
+                    trnOver=true;
                 }
                else if(!cPlay){//Draw A Card if no valid cards in your hand
                     do{
+                        bool validate=false;
                         cout<<"\nNo Valid Card to Play!"<<endl;
                         cout<<"Enter any key to continue"<<endl;
                         cin>>cont;
                         //Draw A Card
-                        plyrPtr->recCrd(deck); //Add a card to players hand
+                        //Add a card to players hand, returns if that card is valid
+                        plyrPtr->recCrd(deck.dealCrds()); 
+                        validate=plyrPtr->valLstCrd(deck.getDis());
                         cout<<"You Drew: ";
-                        plyrPtr->getCrd(plyrPtr->getHndSz());
+                        plyrPtr->shoLstCrd();
                         cout<<endl;
-                        //Check If The Card Just Drawn Can Be Played
-                        bool can=valPlay(plyrPtr,deck,plyrPtr->getHndSz());
-                        if(can){
+                        if(validate){
                             //Play The Card
                             cout<<"Enter any key to Play it"<<endl;
                             cin>>cont;
-                            plyrPtr->playIt(deck);
+                            //Play the card just drawn and set discard
+                            deck.chngDisc(plyrPtr->playTop()); 
                             cPlay=true;
                             trnOver=true;
                         }
@@ -161,12 +146,6 @@ int main(int argc, char** argv) {
                     endgame=true;
                 }
             }while(!trnOver);
-            //If the deck is running low, shuffle and fill deck
-          //  if(deck.getDrSz()<10){
-          //      deck.filDeck();                 //Fill the deck
-           //     deck.shuffle();                 //Fill the draw 
-           //     deck.filDraw();                 //Shuffle the deck
-         //  }
         //Set the current player
         curPlyr=setPlyr(deck.getDis(), curPlyr, numPlyrs);
     }while(!endgame);
@@ -207,49 +186,17 @@ int setPlyr(Card &discard, int curPlyr, int players){
     return curPlyr;
 }
 
-//Determine if a play is valid
-bool valPlay(Player *plyr, Deck &deck, int cardChc){
-    //Temp variables store card info
-    Type pType=plyr->getType(cardChc);  //Hold player's card type
-    Type dType=deck.getDisT();          //Hold discard card type
-    char pCol=plyr->getCol(cardChc);    //Hold player's card color
-    char dCol=deck.getdisC();           //Hold discard card color
-    int  pNum=plyr->getNum(cardChc);    //Hold player's card number
-    int  dNum=deck.getDiscN();          //Hold discard card number 
-    
-    //Wild is always valid
-    if(pType==WILD||dType==WILD4)//Wild is always valid
-        return true;        //return true
-    //Number Card is played
-    if(pType==NUMBER){
-        // If card played matches discard color or number
-        if(pCol==dCol||pNum==dNum){
-            return true;    //return true
-        }
-        //Card played does not match discard color or number
-        else return false;  //return false
-    }
-    //Special Card is played
-    if(pType==SKIP||pType==REVERSE||pType==DRAW2){
-        //If card played matches discard type or color
-        if(pType==dType||pCol==dCol){
-            return true;    //return true
-        }
-        //Card played does not match discard type or color
-        return false;       //return false
-    }
-}
 
 //Process Special Cards
-void prcCard(Player *plyr, Deck &deck, Card &discard){
+void prcCard(Player *plyr,Deck &deck, Card &discard){
     char colChc;        //Hold Player Color Choice
     bool error=false;   //Input Validation
     //Switch on card type
     switch(discard.getType()){ 
         case(DRAW2)://Draw Two
             for(int i=0; i<2; i++){ 
-                plyr->recCrd(deck); //Add two cards to players hand
-            }                       //and Remove them from draw pile
+                plyr->recCrd(deck.dealCrds()); //Add two cards to players hand
+            }                                  //and Remove them from draw pile
             break;
         case(WILD)://Wild
             do{//Input Validation
@@ -271,8 +218,8 @@ void prcCard(Player *plyr, Deck &deck, Card &discard){
             break;
         case(WILD4)://Wild Draw Four
             for(int i=0; i<4; i++){          
-                plyr->recCrd(deck);//Add Four Cards to player's hand    
-            }                      //and Remove them from draw pile
+                plyr->recCrd(deck.dealCrds());//Add Four Cards to player's hand    
+            }                                 //and Remove them from draw pile
             do{
                 cout<<"Choose A Color (r,g,b,y): ";//Get Player Color Choice
                 cin.clear();
@@ -310,7 +257,7 @@ void uno(Player *plyr, Deck &deck, char unoChc, bool cPlay){
     else if(uno&&unoChc!='u'){ //If Player doesn't call uno and has uno
         cout<<"You didn't call UNO! Draw 2 cards!"<<endl; //Message
         for(int i=0; i<2; i++){  //Draw 2 Cards
-            plyr->recCrd(deck); //Add two cards to players hand
+            plyr->recCrd(deck.dealCrds()); //Add two cards to players hand
         }                       //and remove them from draw pile
         cout<<endl;                        
         plyr->showHnd();        //Show player's hand

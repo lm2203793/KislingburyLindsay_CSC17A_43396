@@ -28,6 +28,23 @@ void Player::recCrd(Card add){
     //Add the card to player's hand
     hand.push_back(temp);
 }
+///dont need this
+bool Player::recCrdv(Card add, Card dis){
+    bool t; 
+    Card temp;
+    temp=add;
+    //Add the card to player's hand
+    hand.push_back(temp);
+    t=valPlay(dis, add);
+    cout<<t;
+    return t;
+}
+//validate card just drawn (no valid cards to play)
+bool Player::valLstCrd(Card dis){
+    bool temp;
+    temp=valPlay(dis, hand.back());
+    return temp;
+}
 
 
 //Show Player's hand
@@ -101,11 +118,11 @@ int Player::getNum(int index){
         return num;
     }
 
-void Player::playIt(Deck &deck){
-    Card card=hand.back();  //hold the card chosen
-    //Take Played Card Out of Player's Hand
+Card Player::playTop(){
+    Card temp;
+    temp=hand.back();
     hand.pop_back();
- //   cards.discard=card;
+    return temp;
 }
 
 void Player::setScr(){
@@ -124,6 +141,72 @@ void Player::prntScr(){
         cout<<scr.nm<<"' Largest hand: "<<scr.lrgHnd<<endl;
     }
 
-Card Player::getTurn(){
+Card Player::getPcrd(Card disCrd){
+    int cardChc;
+    Card temp;
+    bool error=false;         //Input val flag 
     
+    do{                 //Input Validation Loop 
+       error=false;     //Reset Input Validation Flag
+       cin.clear();
+       cin.ignore();
+       cout<<"What card do you want to play?"<<endl;
+       cin>>cardChc;
+       if(cardChc<0||cardChc>hand.size()||!cin||cin.fail()){//Validate Play
+           error=true;
+           cout<<"Invalid Choice!"<<endl;
+       }
+       else{
+            temp=hand[cardChc];
+            if(valPlay(disCrd, temp)){
+                hand.erase(hand.begin()+cardChc);
+                return temp;
+            }
+            else{
+                cout<<"Not a Valid Card!"<<endl;
+                error=true;
+            }
+       }
+    }while(!cin||cin.fail()||error);
+
 }
+    
+    
+bool Player::valPlay(Card disCrd, Card pCard){
+    //Temp variables store card info
+    Type pType=pCard.getType();  //Hold player's card type
+    Type dType=disCrd.getType();         //Hold discard card type
+    char pCol=pCard.getColor();  //Hold player's card color
+    char dCol=disCrd.getColor();         //Hold discard card color
+    int  pNum=pCard.getNum();    //Hold player's card number
+    int  dNum=disCrd.getNum();           //Hold discard card number 
+    
+    //Wild is always valid
+    if(pType==WILD){//Wild is always valid
+        cout<<"p card is wild"<<endl;
+        return true;        //return true
+    }
+    if(pType==WILD4){//Wild4 is always valid
+        cout<<"p card is wild"<<endl;
+        return true;
+    }
+    //Number Card is played
+    if(pType==NUMBER){
+        // If card played matches discard color or number
+        if(pCol==dCol||pNum==dNum){
+            return true;    //return true
+        }
+        //Card played does not match discard color or number
+        else return false;  //return false
+    }
+    //Special Card is played
+    if(pType==SKIP||pType==REVERSE||pType==DRAW2){
+        //If card played matches discard type or color
+        if(pType==dType||pCol==dCol){
+            return true;    //return true
+        }
+        //Card played does not match discard type or color
+        return false;       //return false
+    }
+}
+

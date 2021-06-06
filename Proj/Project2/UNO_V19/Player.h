@@ -35,6 +35,8 @@ public:
     void playCard(int, Deck &);
     //Receive a card from the draw pile
     void recCrd(Card); 
+    //Receive a card and validate it
+    bool recCrdv(Card, Card);
     //Set uno status
     void setUno(bool flag){
         unoFlag=flag;
@@ -44,7 +46,7 @@ public:
         winner=true;
     }
     //Play the card just drawn
-    void playIt(Deck &);
+    Card playTop();
     //Set Player's Scores
     void setScr();
     //Store hand size
@@ -84,7 +86,7 @@ public:
     //Get player's uno status
     void unoStat(bool);
     //Get player's can play status
-    bool cPlyStat(Card &);
+    virtual bool cPlyStat(Card &);
     //Get game score
     GmScore getScr(){
         return scr;
@@ -93,7 +95,17 @@ public:
     void prntScr();
     
     //get turn
-    Card getTurn();
+    Card getPcrd(Card);
+    
+    //
+    bool valPlay(Card,Card);
+    
+    bool valLstCrd(Card);
+    
+    void shoLstCrd(){
+        cout<<hand.back();
+    }
+    
     
 };
 
