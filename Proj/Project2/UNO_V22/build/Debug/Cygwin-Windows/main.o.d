@@ -1,5 +1,5 @@
 build/Debug/Cygwin-Windows/main.o: main.cpp Deck.h Card.h Type.h Player.h \
- GmScore.h Hplayer.h Cplayer.h
+ GmScore.h hPlayer.h cPlayer.h
 
 Deck.h:
 
@@ -11,6 +11,6 @@ Player.h:
 
 GmScore.h:
 
-Hplayer.h:
+hPlayer.h:
 
-Cplayer.h:
+cPlayer.h:

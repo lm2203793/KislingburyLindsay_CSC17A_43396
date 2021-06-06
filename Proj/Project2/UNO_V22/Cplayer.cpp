@@ -33,6 +33,7 @@ Card Cplayer::getPcrd(Card disCrd){
                    switch(max){
                        case 11:
                            temp=hand[fndMchSym(DRAW2, valCrds)];
+                           
                            break;
                        case 12:
                            temp=hand[fndMchSym(SKIP, valCrds)];

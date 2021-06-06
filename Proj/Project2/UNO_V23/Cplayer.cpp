@@ -7,18 +7,25 @@
 #include "Player.h"
 #include "CPlayer.h"
 #include "Type.h"
+#include <vector>
 using namespace std;
 
 Card Cplayer::getPcrd(Card disCrd){
     Card temp;
     int vecSz=0;
     vector<int> valCrds;   //valid cards indexes
+    cout<<"valid card indexes: ";
     for(int i=0; i<hand.size(); i++){
         if(valPlay(disCrd,hand[i])){
             valCrds.push_back(i);
             vecSz++;
         }
     }
+    cout<<"valCrds: ";
+    for(int i=0; i<valCrds.size(); i++){
+        cout<<valCrds[i]<<" ";
+    }
+    cout<<endl;
     switch(hardNum){ //switch on difficulty
         case 1: //completely random valid card
             int index;
@@ -28,36 +35,39 @@ Card Cplayer::getPcrd(Card disCrd){
             break;
         case 2: //picks the card that matches most common color or symbol
             int coin;
-            coin=rand()%1; //match on color or symbol on coin flip
+            coin=rand()%2+1; //match on color or symbol on coin flip
             if(coin==1){
-                int *sScrs;
-                scoreSym(sScrs); //determine value of each symbol (# or special card) and store in array
-                int *tots;
-                scrCrdsN(valCrds, sScrs, tots, vecSz); //determine value of each valid card in the hand and store in array
-                int smax=0; 
-                //find max card value
-                for(int i=0; i<sizeof(tots); i++){
-                    if(tots[i]>smax){
-                        smax=i;
-                    }
-                    temp=hand[valCrds[smax]]; //play the card with max value
+                int sScrs[14]={0};
+                scoreSym(sScrs);     //determine value of each symbol (# or special card) and store in array
+                int smax=scrCrdsN(valCrds, sScrs, vecSz); //determine value of each valid card in the hand and store in array
+                cout<<"symbol scores"<<endl;
+                for(int i=0; i<14; i++){
+                    cout<<sScrs[i]<<" ";
                 }
+                int index=valCrds[smax];
+                temp=hand[index]; //play the card with max value
+                int erase=valCrds[smax];
+                cout<<"erase at index: "<<erase<<endl;
+                hand.erase(hand.begin()+erase);
             }
             else{
-                int *cScrs;
+                int cScrs[4]={0};
                 scoreClr(cScrs); //determine value of each color and store in array
-                int *tots;
-                scrCrdsC(valCrds, cScrs, tots, vecSz); //determine value of each valid card in the hand and store in array
-                int cmax=0; 
-                //find max card value
-                for(int i=0; i<sizeof(tots); i++){
-                    if(tots[i]>cmax){
-                        cmax=i;
-                    }
-                    temp=hand[valCrds[cmax]]; //play the card with max value
+                int cmax=scrCrdsC(valCrds, cScrs, vecSz); //determine value of each valid card in the hand and store in array
+                cout<<"coin "<<coin<<endl;
+                cout<<"color scores"<<endl;
+                for(int i=0; i<4; i++){
+                    cout<<cScrs[i]<<" ";
                 }
+                int index=valCrds[cmax];
+                temp=hand[index]; //play the card with max value
+                int erase=valCrds[cmax];
+                cout<<"erase at index: "<<erase<<endl;
+                hand.erase(hand.begin()+erase);
             }
             break;
+    }
+            /*
         case 3: //Super Smart! Plays either the most common color or number, whatever is better
             int *sScrs;
             scoreSym(sScrs); //determine value of each symbol (# or special card) and store in array
@@ -82,10 +92,11 @@ Card Cplayer::getPcrd(Card disCrd){
             }
             temp=hand[valCrds[max]]; //play the card with max value
             break;
-    }
+             
+    }*/
     cout<<name<<" plays ";
     cout<<temp;
-    return temp;
+    return temp;        
 }
 
 
@@ -109,7 +120,7 @@ char Cplayer::wildPic(){
                 break;
         }
     }
-    int cmax=rand()%3;
+    int cmax=0;
     //find the max
     for(int i=0; i<4; i++){
         if(temp[i]>cmax){
@@ -125,63 +136,59 @@ char Cplayer::wildPic(){
 }
 
 //returns 
-void Cplayer::scoreSym(int *sysNums){
-    int temp[13]={0};
-    sysNums=temp;
+void Cplayer::scoreSym(int sScrs[]){
     for(int i=0; i<hand.size(); i++){
-        //count symbols and store them in sysNums
+        //count symbols and store them in sScrs
         switch(hand[i].getType()){
             case NUMBER:
-                sysNums[hand[i].getNum()]++;
+                sScrs[hand[i].getNum()]++;
                 break;
             case DRAW2:
-                sysNums[11]++;
+                sScrs[11]++;
                 break;     
             case SKIP:
-                sysNums[12]++;
+                sScrs[12]++;
                 break;
             case REVERSE:
-                sysNums[13]++;
+                sScrs[13]++;
         }
     }
 }
 
-void Cplayer::scoreClr(int *colNums){
-    int temp[4]={0};
-    colNums=temp;
+void Cplayer::scoreClr(int cScrs[]){
     for(int i=0; i<hand.size(); i++){
         switch(hand[i].getColor()){
             case 'r':
-                colNums[0]++;
+                cScrs[0]++;
                 break;
             case 'g':
-                colNums[1]++;
+                cScrs[1]++;
                 break;
             case 'b':
-                colNums[2]++;
+                cScrs[2]++;
                 break;
             case 'y':
-                colNums[3]++;
+                cScrs[3]++;
                 break;
         }
     }
+    cout<<endl;
 }
 //build a score for every in card in vector of valid cards
-void Cplayer::scrCrdsN(vector<int> valCrds, int *scrsN, int *symTots, int vecSz){
-    int *temp=new int[vecSz];
-    symTots=temp;
+ int Cplayer::scrCrdsN(vector<int> valCrds, int sScrs[], int vecSz){
+    int symTots[vecSz]={0};
     for(int i=0; i<valCrds.size(); i++){
         Type type=hand[valCrds[i]].getType();
          if(type!=NUMBER){
             switch(type){
                 case DRAW2:
-                    symTots[i]=scrsN[11];
+                    symTots[i]=sScrs[11];
                     break;
                 case SKIP:
-                    symTots[i]=scrsN[12];
+                    symTots[i]=sScrs[12];
                     break;
                 case REVERSE:
-                    symTots[i]=scrsN[13];
+                    symTots[i]=sScrs[13];
                     break;
                 case WILD: //only play as last resort
                 case WILD4:
@@ -190,37 +197,47 @@ void Cplayer::scrCrdsN(vector<int> valCrds, int *scrsN, int *symTots, int vecSz)
             }
        }
        else{
-           symTots[i]=scrsN[hand[valCrds[i]].getNum()];
+           symTots[i]=hand[valCrds[i]].getNum();
+        }
+    } 
+    //find max card value
+    int smax=0;
+    for(int i=0; i<sizeof(symTots); i++){
+        if(symTots[i]>smax){
+            smax=i;
         }
     }
-    //clean up
-    delete []temp;
+    return smax;
 }
 
 //build a score for every in card in vector of valid cards
-void Cplayer::scrCrdsC(vector<int> valCrds, int *scrsC, int *colTots, int vecSz){
-    int *temp=new int[vecSz];
-    colTots=temp;
+int Cplayer::scrCrdsC(vector<int> valCrds, int cScrs[], int vecSz){
+    int colTots[vecSz]={0};
     for(int i=0; i<valCrds.size(); i++){
         char col=hand[valCrds[i]].getColor();
         switch(col){
             case 'r':
-                colTots[i]=scrsC[0];
+                colTots[i]=cScrs[0];
                 break;
             case 'g':
-                colTots[i]=scrsC[1];
+                colTots[i]=cScrs[1];
                 break;
             case 'b':
-                colTots[i]=scrsC[2];
+                colTots[i]=cScrs[2];
                 break;
             case 'y':
-                colTots[i]=scrsC[3];
+                colTots[i]=cScrs[3];
                 break;
             case 'X':
                 colTots[i]=0;
                 break;
         }
     }
-    //clean up
-    delete []temp;
+    //find max card value
+    int cmax=0;
+    for(int i=0; i<sizeof(colTots); i++){
+        if(colTots[i]>cmax){
+            cmax=i;
+        }
+    }
 }

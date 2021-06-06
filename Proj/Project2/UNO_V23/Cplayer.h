@@ -27,18 +27,16 @@ public:
     }
     
     //counts number of each symbol
-    void scoreSym(int*);
+    void scoreSym(int[]);
     
     //counts number of each color
-    void scoreClr(int*);
+    void scoreClr(int[]);
     
     //assigns a value to each valid card by number
-    void scrCrdsN(vector<int>, int *, int *, int);
+    int scrCrdsN(vector<int>, int[], int);
     //assigns a value to each valid card by color
-    void scrCrdsC(vector<int>, int *, int *, int);
-   
-    
-    
+    int scrCrdsC(vector<int>, int[], int);
+
     int findMaxN(vector<int> valCrds);
     
     virtual Card getPcrd(Card);

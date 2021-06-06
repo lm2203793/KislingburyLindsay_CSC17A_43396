@@ -14,8 +14,8 @@
 //User Libraries    
 #include "Deck.h"   //Deck Class
 #include "Player.h" //Player Class
-#include "hPlayer.h" //uman player
-#include "cPlayer.h" //computer player
+#include "Hplayer.h" //human player
+#include "Cplayer.h" //computer player
 using namespace std;//Standard Name space
 //Function Prototypes
 void prcCard(Player *, Deck &, Card &);             //Process Card
@@ -23,7 +23,7 @@ bool unoFlag(const vector<Card> *, bool);           //Uno Status
 void uno(Player *, Deck &, char, bool);             //Uno Actions
 bool valPlay(Player *, Deck &, int);                //Validate Play
 int setPlyr(Card &, int, int);                      //Set Current Player
-void wrtScr(Player *, int);                         //Write Scores To File 
+void wrtScr(Player **, int);                         //Write Scores To File 
 void rdScr();                                       //Display Scores From File
 
 //Execution Begins Here!
@@ -48,7 +48,10 @@ int main(int argc, char** argv) {
     numPlyrs=0, curPlyr=0, cardChc=0;
     endgame=false, error=false, cPlay=false, unoFlag=false, trnOver=false;
     
- //  rdScr();
+    //read previous scores
+    rdScr();
+    
+    
     
     //SETUP GAME
     //Input # of Players:
@@ -181,7 +184,7 @@ int main(int argc, char** argv) {
         curPlyr=setPlyr(deck.getDis(), curPlyr, numPlyrs);
     }while(!endgame);
     //Write scores to game structure
- //  wrtScr(plyrs, numPlyrs);
+    wrtScr(plyrs, numPlyrs);
     //clean up
     delete []plyrs;
     return 0;
@@ -305,29 +308,30 @@ void uno(Player *plyr, Deck &deck, char unoChc, bool cPlay){
     }
 }
 //Write Scores To file
-void wrtScr(Player *plyrs, int numPlyrs){
+void wrtScr(Player **plyrs, int numPlyrs){
     GmScore temp;   //Hold players scores
     fstream scrs;   //Fstream object
     scrs.open("scores.txt", ios::app); //Open scores file
+    scrs<<"+-------------------------------------+\n";
     scrs<<"Players: ";                 
     for(int i=0; i<numPlyrs; i++){    //Write names of all players for this game
-        temp=plyrs[i].getScr();
+        temp=plyrs[i]->getScr();
         scrs<<temp.nm;
         if(i!=numPlyrs-1) scrs<<", ";
     }
     scrs<<"\n";
     for(int i=0; i<numPlyrs; i++){   //Write the winner and loser
-        temp=plyrs[i].getScr();
+        temp=plyrs[i]->getScr();
         if(temp.win) scrs<<"Winner: ";
         else scrs<<"Loser: ";
         scrs<<temp.nm<<endl;
     }
     scrs<<"\n";
    for(int i=0; i<numPlyrs; i++){    //Write each player's largest hand
-        temp=plyrs[i].getScr();
+        temp=plyrs[i]->getScr();
         scrs<<temp.nm<<"'s Largest Hand: "<<temp.lrgHnd<<endl;
     }
-    scrs<<"\n";
+    scrs<<"\n+------------------------------------+\n";
     scrs.close();                   //Close scores File
 }
 

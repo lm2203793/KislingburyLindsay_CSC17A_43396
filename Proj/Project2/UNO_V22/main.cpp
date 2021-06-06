@@ -251,7 +251,7 @@ void prcCard(Player *plyr,Deck &deck, Card &discard){
                     }
                 }
                 else{//if bot
-                    static_cast<Cplayer>(plyr)->
+                    //
                 }
             }while(!cin||cin.fail()||error);
             colChc=tolower(colChc);    //Ensure that color choice is lowercase

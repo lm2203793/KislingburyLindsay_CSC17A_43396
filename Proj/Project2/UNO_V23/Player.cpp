@@ -64,7 +64,6 @@ void Player::playCard(int index, Deck &deck){
     Card card=hand[index];  //hold the card chosen
     //Take Played Card Out of Player's Hand
     hand.erase(hand.begin()+index);
-   // cards.discard=card;
 }
 //Determine Uno Status
 void Player::unoStat(bool canPlay){
