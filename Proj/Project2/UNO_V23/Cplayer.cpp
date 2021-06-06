@@ -168,7 +168,7 @@ void Cplayer::scoreClr(int *colNums){
 }
 //build a score for every in card in vector of valid cards
 void Cplayer::scrCrdsN(vector<int> valCrds, int *scrsN, int *symTots, int vecSz){
-    int temp[vecSz];
+    int *temp=new int[vecSz];
     symTots=temp;
     for(int i=0; i<valCrds.size(); i++){
         Type type=hand[valCrds[i]].getType();
@@ -193,11 +193,13 @@ void Cplayer::scrCrdsN(vector<int> valCrds, int *scrsN, int *symTots, int vecSz)
            symTots[i]=scrsN[hand[valCrds[i]].getNum()];
         }
     }
+    //clean up
+    delete []temp;
 }
 
 //build a score for every in card in vector of valid cards
 void Cplayer::scrCrdsC(vector<int> valCrds, int *scrsC, int *colTots, int vecSz){
-    int temp[vecSz];
+    int *temp=new int[vecSz];
     colTots=temp;
     for(int i=0; i<valCrds.size(); i++){
         char col=hand[valCrds[i]].getColor();
@@ -219,4 +221,6 @@ void Cplayer::scrCrdsC(vector<int> valCrds, int *scrsC, int *colTots, int vecSz)
                 break;
         }
     }
+    //clean up
+    delete []temp;
 }

@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
                         plyrs[i]->setScr();
                     }
                     //Display End Game Message
-                    cout<<"+***************************************+"<<endl;
+                    cout<<"\n+***************************************+"<<endl;
                     cout<<"\t\tEND GAME!!"<<endl;
                     cout<<plyrPtr->getName()<<" WINS!!!!"<<endl;
                     for(int i=0; i<numPlyrs; i++){

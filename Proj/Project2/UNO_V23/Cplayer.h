@@ -33,7 +33,7 @@ public:
     void scoreClr(int*);
     
     //assigns a value to each valid card by number
-    void scrCrdsN(vector<int>, int *, int *, int );
+    void scrCrdsN(vector<int>, int *, int *, int);
     //assigns a value to each valid card by color
     void scrCrdsC(vector<int>, int *, int *, int);
    
