@@ -1,0 +1,8 @@
+<map id="prcCard" name="prcCard">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,72,83"/>
+<area shape="rect" id="node2" href="$class_deck.html#a5016c47b42aebed96a123ddb78839c99" title=" " alt="" coords="120,5,231,32"/>
+<area shape="rect" id="node5" href="$class_card.html#a14d1e86582c0e71d03768759050f1faf" title=" " alt="" coords="124,56,227,83"/>
+<area shape="rect" id="node6" href="$class_player.html#ae7dfecfdfc07b9dd9ba4a9296e0a4e33" title=" " alt="" coords="123,107,228,133"/>
+<area shape="rect" id="node3" href="$class_deck.html#a459b2da0ca26bee3d800f83e8c1dcfe3" title=" " alt="" coords="279,5,367,32"/>
+<area shape="rect" id="node4" href="$class_deck.html#ae5a1e52ab00ae5924f2bc6b730dba3eb" title=" " alt="" coords="415,5,512,32"/>
+</map>

@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['getchc_136',['getChc',['../class_hplayer_1_1_bad_chc.html#afd1100c3019a93915345e8001f4858cf',1,'Hplayer::BadChc']]],
+  ['getcol_137',['getCol',['../class_player.html#a41cea2962cc5cb6d4de7a3b8ff93e254',1,'Player']]],
+  ['getcoln_138',['getColn',['../class_card.html#aa8b4e5155fa7d2d0a7235586778c3fce',1,'Card']]],
+  ['getcolor_139',['getColor',['../class_card.html#a8e0927482db6064f50f635a41ec796a4',1,'Card']]],
+  ['getcrd_140',['getCrd',['../class_player.html#a085dd585a2690084f57d9f1031ffa17e',1,'Player']]],
+  ['getdis_141',['getDis',['../class_deck.html#a4e72d23f46d266c219282a0ab5235db7',1,'Deck']]],
+  ['getdisc_142',['getdisC',['../class_deck.html#a9f5b7a595ac16a2288458b90b1714432',1,'Deck']]],
+  ['getdiscn_143',['getDiscN',['../class_deck.html#a522f504eb0bbd5d6838bbe0e874854a3',1,'Deck']]],
+  ['getdist_144',['getDisT',['../class_deck.html#a8d53ae627a1883acd472c06ae0b9ab57',1,'Deck']]],
+  ['gethnd_145',['getHnd',['../class_player.html#a6ae2671121566f8d9ae74ae5ff568e8a',1,'Player']]],
+  ['gethndsz_146',['getHndSz',['../class_player.html#a5beefca1a632bb664ffb6abd08f550f9',1,'Player']]],
+  ['getname_147',['getName',['../class_player.html#af9a6045fa96f736664c4eab4caa5e8e5',1,'Player']]],
+  ['getnum_148',['getNum',['../class_card.html#ab7ddfad508c0187181d009467263464c',1,'Card::getNum()'],['../class_player.html#a89545dc94c9d11f3c45cd05e963c9336',1,'Player::getNum()']]],
+  ['getpcrd_149',['getPcrd',['../class_cplayer.html#aceb7a84f47e64c434ab0704e963b3800',1,'Cplayer::getPcrd()'],['../class_hplayer.html#a98035fdf464a3357d01c55a1efabcf13',1,'Hplayer::getPcrd()'],['../class_player.html#afaad51cfc721fe31a24a4667482838d3',1,'Player::getPcrd()']]],
+  ['getpoints_150',['getPoints',['../class_card.html#a4cf179f56ed31dc3adc3f9e74d9382a7',1,'Card']]],
+  ['getscr_151',['getScr',['../class_player.html#aa9ad72f7427229c02228a7123c8acaca',1,'Player']]],
+  ['gettype_152',['getType',['../class_card.html#a14d1e86582c0e71d03768759050f1faf',1,'Card::getType()'],['../class_player.html#ac684e583004a5c82e358c7ca9d9cb9e6',1,'Player::getType(int)']]],
+  ['getuno_153',['getUno',['../class_player.html#a870e132647829b6c6e121bea632034b4',1,'Player']]]
+];
