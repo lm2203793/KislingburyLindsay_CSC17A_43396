@@ -1,0 +1,61 @@
+Players: Robot, Lindsay
+Loser: Robot
+Winner: Lindsay
+
+Robot's Largest Hand: 8
+Lindsay's Largest Hand: 8
+
++--------------------------------------------------+
+Players: Robot, Takkun, ick
+Loser: Robot
+Winner: Takkun
+Loser: ick
+
+Robot's Largest Hand: 38
+Takkun's Largest Hand: 12
+ick's Largest Hand: 36
+
++--------------------------------------------------+
++--------------------------------------------------+
+Players: Otto, Dumb Robot
+Loser: Otto
+Winner: Dumb Robot
+
+Otto's Largest Hand: 8
+Dumb Robot's Largest Hand: 10
+
++--------------------------------------------------+
++-------------------------------------+
+Players: a, b
+Loser: a
+Winner: b
+
+a's Largest Hand: 12
+b's Largest Hand: 7
+
++------------------------------------+
++-------------------------------------+
+Players: A, B
+Winner: A
+Loser: B
+
+A's Largest Hand: 8
+B's Largest Hand: 13
+
++------------------------------------+
++-------------------------------------+
+Players: a, b
+Winner: a
+Loser: b
+
+a's Largest Hand: 9
+b's Largest Hand: 15
+
++------------------------------------+
++-------------------------------------+
+Players: b
+Winner: b
+
+b's Largest Hand: 12
+
++------------------------------------+

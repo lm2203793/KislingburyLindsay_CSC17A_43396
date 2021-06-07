@@ -1,0 +1,83 @@
++-------------------------------+
+           GAME SCORE:          
+Players: Dumb Bot, Smart Bot
+Loser: Dumb Bot
+Winner: Smart Bot
+
+Dumb Bot's Largest Hand: 17
+Smart Bot's Largest Hand: 18
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: Lindsay, ROBOT
+Winner: Lindsay
+Loser: ROBOT
+
+Lindsay's Largest Hand: 7
+ROBOT's Largest Hand: 7
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: Lucky Bot, Nick, Lindsay
+Winner: Lucky Bot
+Loser: Nick
+Loser: Lindsay
+
+Lucky Bot's Largest Hand: 15
+Nick's Largest Hand: 14
+Lindsay's Largest Hand: 7
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: Smarty, Takkun
+Loser: Smarty
+Winner: Takkun
+
+Smarty's Largest Hand: 14
+Takkun's Largest Hand: 7
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: b, b2
+Winner: b
+Loser: b2
+
+b's Largest Hand: 16
+b2's Largest Hand: 25
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: B1, B2
+Winner: B1
+Loser: B2
+
+B1's Largest Hand: 7
+B2's Largest Hand: 14
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: e, b
+Loser: e
+Winner: b
+
+e's Largest Hand: 7
+b's Largest Hand: 7
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: 1, 2
+Winner: 1
+Loser: 2
+
+1's Largest Hand: 29
+2's Largest Hand: 55
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: b1, b2
+Winner: b1
+Loser: b2
+
+b1's Largest Hand: 56
+b2's Largest Hand: 41
++-------------------------------+

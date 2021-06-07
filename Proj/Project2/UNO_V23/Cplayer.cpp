@@ -40,6 +40,7 @@ Card Cplayer::getPcrd(Card disCrd){
                 int sScrs[14]={0};
                 scoreSym(sScrs);     //determine value of each symbol (# or special card) and store in array
                 int smax=scrCrdsN(valCrds, sScrs, vecSz); //determine value of each valid card in the hand and store in array
+                cout<<"coin "<<coin<<endl;
                 cout<<"symbol scores"<<endl;
                 for(int i=0; i<14; i++){
                     cout<<sScrs[i]<<" ";
@@ -197,16 +198,23 @@ void Cplayer::scoreClr(int cScrs[]){
             }
        }
        else{
-           symTots[i]=hand[valCrds[i]].getNum();
+           symTots[i]=sScrs[hand[valCrds[i]].getNum()];
         }
     } 
+    cout<<"symbol totals: ";
+    for(int i=0; i<vecSz; i++){
+        cout<<symTots[i]<<" ";
+    }
+    cout<<endl;
     //find max card value
+    
     int smax=0;
-    for(int i=0; i<sizeof(symTots); i++){
+    for(int i=0; i<vecSz; i++){
         if(symTots[i]>smax){
             smax=i;
         }
     }
+    cout<<"smax: "<<smax<<endl;
     return smax;
 }
 
@@ -235,9 +243,11 @@ int Cplayer::scrCrdsC(vector<int> valCrds, int cScrs[], int vecSz){
     }
     //find max card value
     int cmax=0;
-    for(int i=0; i<sizeof(colTots); i++){
+    for(int i=0; i<vecSz; i++){
         if(colTots[i]>cmax){
             cmax=i;
         }
     }
+    cout<<"cmax: "<<cmax<<endl;
+    return cmax;
 }

@@ -2,6 +2,7 @@
  * File:   Game.h
  * Author: Lindsay Kislingbury
  * Purpose: UNO V10
+ *          FIRST VERSION, BEGIN MAKING CLASSES
  * Created on June 1, 2021, 9:36 PM
  */
 

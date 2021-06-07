@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: Lindsay Kislingbury
  * Purpose: UNO V13
- *          Working!!!! I CAN STOP BANGING MY HEAD ON THE DESK 
+ *          Does not run, classes are a mess
  * Created on June 2, 2021, 8:07 PM
  */
 //System Libraries

@@ -2,7 +2,8 @@
  * File:   main.cpp
  * Author: Lindsay Kislingbury
  * Purpose: UNO V13
- * IT WORKS!!!! CLASSES MAKE SENSE!! WORKING BOT!
+ * Completely restructured classes
+ * Added AI for bot, which has logic issues 
  * Created on June 2, 2021, 8:07 PM
  */
 //System Libraries
