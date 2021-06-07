@@ -91,16 +91,36 @@ void plyGame(){
 
     //SETUP GAME
     //Input # of Players:
-    cout<<"How many Players?: ";
-    cin>>numPlyrs; 
-    cin.clear();
-    cin.ignore();
+    bool tryAgn=true;   //Input Validation
+    while(tryAgn){
+        cout<<"How many Players? (Up to 4): ";
+        cin>>numPlyrs;
+        if(numPlyrs>0&&numPlyrs<=4&&cin&&!cin.fail()){
+            tryAgn=false;
+        }
+        else{
+            cin.clear();
+            cin.ignore();
+            cout<<"Invalid!"<<endl;
+        }
+    }
     //Allocate memory for array of Players
     plyrs=new Player*[numPlyrs];
     for(int i=0; i<numPlyrs; i++){//Loop on # of players
         char botChc;
-        cout<<"Human or Bot? (h or b): ";
-        cin>>botChc;     //Input human or bot choice
+        tryAgn=true;
+        while(tryAgn){
+            cout<<"Player "<<(i+1)<<": Human or Bot? (h or b): ";
+            cin>>botChc;     //Input human or bot choice
+            if(botChc=='b'||botChc=='h'&&cin&&!cin.fail()){
+                tryAgn=false;
+            }
+            else{
+                cin.clear();
+                cin.ignore();
+                cout<<"Invalid!"<<endl;
+            }
+        }
         if(botChc=='h'){ //If choice is human
             Hplayer *temp=new Hplayer;//Allocate memory for an Hplayer object
             plyrs[i]=temp;         //Set pointer in plyrs at i to Hplayer object
@@ -109,8 +129,18 @@ void plyGame(){
             int difChc;
             Cplayer *temp=new Cplayer;//Allocate memory for a Cplayer object
             plyrs[i]=temp;        //Set pointer in plyrs at i to Hplayer object
-            cout<<"Difficulty? 1,2 or 3: "; 
-            cin>>difChc;          //Input difficulty level 
+            tryAgn=true;
+            while(tryAgn){
+                cout<<"\nDifficulty?\n1: Dumb Bot    2: Lucky Bot    "
+                        <<"3: Smart Bot\nEnter 1, 2 or 3: "; 
+                cin>>difChc;          //Input difficulty level 
+                if(tryAgn<0||tryAgn>3||!cin||cin.fail()){
+                    cin.ignore();
+                    cin.clear();
+                    cout<<"Invalid!"<<endl;
+                }
+                else tryAgn=false;
+            }
             temp->setHrd(difChc); //Set cPlayer object difficulty level
         }
         string name;

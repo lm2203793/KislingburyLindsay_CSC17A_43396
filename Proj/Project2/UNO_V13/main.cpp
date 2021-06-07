@@ -45,8 +45,17 @@ int main(int argc, char** argv) {
     
     
     //Get # of Players:
-    cout<<"How many Players?: ";
-    cin>>numPlyrs;
+    bool tryAgn=true;
+    while(tryAgn){
+        cout<<"How many Players? (Up to 4):";
+        cin>>numPlyrs;
+        if(numPlyrs<0||numPlyrs>4){
+            cout<<"Invalid!"<<endl;
+            cin>>numPlyrs;
+        }
+        else
+            tryAgn=false;
+    }
     plyrs=new Player[numPlyrs];
     for(int i=0; i<numPlyrs; i++){
         string name;

@@ -1,8 +1,0 @@
-Players: a, Loser: a
-Winner: b
-a's Largest Hand: 8
-b's Largest Hand: 7
-Players: abc, defLoser: abc
-Winner: def
-abc's Largest Hand: 12
-def's Largest Hand: 8
