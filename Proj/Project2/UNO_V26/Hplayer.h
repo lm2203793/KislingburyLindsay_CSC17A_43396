@@ -38,9 +38,6 @@ public:
             return crdChc;
         }
     };
-
-    
-
 };
 
 

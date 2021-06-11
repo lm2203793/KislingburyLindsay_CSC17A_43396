@@ -26,17 +26,16 @@ protected:
 public:
     //Default Constructor
     Player(){}
-    //Mutators
     //Set Player Info
     void set(int, string);
-    //Deal 
-    void deal(Deck &);
-    //Play a card
-    void playCard(int, Deck &);
+    //Virtual function overridden in Cplayer and Hplayer classes
+    virtual Card getPcrd(Card &)=0;
     //Receive a card from the draw pile
     void recCrd(Card); 
-    //Receive a card and validate it
-    bool recCrdv(Card, Card);
+    //Validate Card played
+    bool valPlay(Card,Card);
+    //Validate Card played when forced to draw
+    bool valLstCrd(Card);
     //Set uno status
     void setUno(bool flag){
         unoFlag=flag;
@@ -53,7 +52,6 @@ public:
     void setHnSz(){
         hndSzs.push_back(hand.size());
     }
-    //Accessors
     //Get Player's hand
     vector<Card>getHnd(){
         return hand;
@@ -92,22 +90,10 @@ public:
     }
     //Print game score
     void prntScr();
-    
-    //get turn
-    virtual Card getPcrd(Card &)=0;
-    
-    //
-    bool valPlay(Card,Card);
-    
-    bool valLstCrd(Card);
-    
+    //Show the last card in hand
     void shoLstCrd(){
         cout<<hand.back();
-    }
-    
-    
-    
-    
+    }    
 };
 
 

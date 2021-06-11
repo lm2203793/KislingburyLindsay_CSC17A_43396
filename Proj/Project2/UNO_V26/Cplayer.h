@@ -45,10 +45,7 @@ public:
     //Assigns a value to each playable card in the player's hand
     //Number, type, and color
     int sCrdsA(int [], int [], vector<int>, int );
-    
 };
-
-
 
 #endif /* CPLAYER_H */
 

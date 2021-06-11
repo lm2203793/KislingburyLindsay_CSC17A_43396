@@ -60,7 +60,5 @@ public:
         return num;
     }
 };
-
-
 #endif /* DECK_H */
 

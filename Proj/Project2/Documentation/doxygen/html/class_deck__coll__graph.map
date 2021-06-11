@@ -1,0 +1,10 @@
+<map id="Deck" name="Deck">
+<area shape="rect" id="node1" title=" " alt="" coords="48,432,144,671"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,211,112,289"/>
+<area shape="rect" id="node3" href="$class_card.html" title=" " alt="" coords="137,145,234,355"/>
+<area shape="rect" id="node4" title=" " alt="" coords="21,5,67,83"/>
+<area shape="rect" id="node5" title=" " alt="" coords="92,5,143,83"/>
+<area shape="rect" id="node6" title=" " alt="" coords="167,5,206,83"/>
+<area shape="rect" id="node7" title=" " alt="" coords="237,5,288,83"/>
+<area shape="rect" id="node8" title=" " alt="" coords="313,5,367,83"/>
+</map>

@@ -9,6 +9,7 @@
 #include "CPlayer.h"
 #include "Type.h"
 #include <vector>
+#include <iostream>
 using namespace std;
 
 //Overloaded version of getPcrd
@@ -53,6 +54,7 @@ Card Cplayer::getPcrd(Card &disCrd){
             }
             break; 
         case 3: //Smart Bot (Best choice based on color AND symbol)
+            cout<<" "<<endl;
             int sScrs[14]={0};  //Hold the value of each valid card by symbol
             scoreSym(sScrs);    //Calculate the value based on symbol
             int cScrs[4]={0};   //Hold the value of each valid card by color
@@ -63,15 +65,17 @@ Card Cplayer::getPcrd(Card &disCrd){
             int erase=valCrds[amax];
             hand.erase(hand.begin()+erase); //Remove that card from hand
             break;
+    } 
+    //Set wild color if the card is wild
+    if(temp.getType()==WILD||temp.getType()==WILD4){
+        char wCol;
+        wCol=chsWild();        //Choose best wild color
+        temp.setColor(wCol);   //Set color of temp card object
     }
-    
-    //Set wild color
-    char wCol;
-    wCol=chsWild();        //Choose best wild color
-    temp.setColor(wCol);   //Set color of temp card object
-    cout<<name<<" plays "; //Display choice
+    //Display choice
+    cout<<name<<" plays "; 
     cout<<temp;           
-    return temp;           //Return temp Card object
+    return temp;//Return temp Card object
 }
 
 //Assigns a value to each playable card in the player's hand
@@ -121,26 +125,24 @@ int Cplayer::sCrdsA(int sScrs[], int cScrs[], vector<int> valCrds, int vecSz){
         case 'X':
             allTots[i]+=0;
             break;
-    }
-    int amax;
-    for(int i=0; i<vecSz; i++){
-        if(allTots[i]>amax){
-            amax=i;
         }
-    }
-    return amax;
-}
-    
-    
-    
+        int amax;
+        for(int i=0; i<vecSz; i++){
+            if(allTots[i]>amax){
+                amax=i;
+            }
+        }
+        return amax;
+    }   
 }
 
-//pick a wild color
+//Pick a wild color
 char Cplayer::chsWild(){
     int temp[4]={0}; //Hold card values
     //Loop on hand size, increment each color that appears in the hand
     for(int i=0; i<hand.size(); i++){
-        switch(hand[i].getColor()){ //Switch on color
+        char color=hand[i].getColor();
+        switch(color){ //Switch on color
             case 'r':
                 temp[0]++;
                 break;
@@ -193,7 +195,8 @@ void Cplayer::scoreSym(int sScrs[]){
 void Cplayer::scoreClr(int cScrs[]){
     //Increment value for each color in hand
     for(int i=0; i<hand.size(); i++){
-        switch(hand[i].getColor()){//Switch on color
+        char color=hand[i].getColor();
+        switch(color){//Switch on color
             case 'r':
                 cScrs[0]++;
                 break;
@@ -208,7 +211,6 @@ void Cplayer::scoreClr(int cScrs[]){
                 break;
         }
     }
-    cout<<endl;
 }
 //Assigns a value to each playable card in the player's hand
 //For number and type
@@ -254,8 +256,8 @@ int Cplayer::scrCrdsC(vector<int> valCrds, int cScrs[], int vecSz){
     int colTots[vecSz]={0}; //Hold values for each color card in hand
     //Loop through valid cards, store the value for each color
     for(int i=0; i<valCrds.size(); i++){
-        char col=hand[valCrds[i]].getColor();
-        switch(col){ //Switch on color
+        char color=hand[valCrds[i]].getColor();
+        switch(color){ //Switch on color
             case 'r':
                 colTots[i]=cScrs[0];
                 break;

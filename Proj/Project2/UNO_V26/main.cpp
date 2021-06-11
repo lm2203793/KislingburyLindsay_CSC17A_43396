@@ -12,7 +12,7 @@
 #include <vector>   //Vector Library
 #include <string>   //String Library
 #include <fstream>  //File Stream Library
-#include <typeinfo> 
+#include <typeinfo> //TypeId Library
 //User Libraries    
 #include "Deck.h"    //Deck Class
 #include "Player.h"  //Player Class
@@ -79,7 +79,8 @@ void plyGame(){
                     cPlay,     //Flag, if player has a playable card
                     endgame,   //Flag, if game is running endgame=false
                     trnOver,   //Flag, if turn is over=true 
-                    error;     //Input Validation Error Checking 
+                    error,     //Input Validation Error Checking 
+                    tryAgn;
     Deck            deck;      //Deck object
     Player         *plyrPtr;   //Pointer to individual player
     Player         **plyrs;    //Pointer to array of players
@@ -91,7 +92,7 @@ void plyGame(){
 
     //SETUP GAME
     //Input # of Players:
-    bool tryAgn=true;   //Input Validation
+    tryAgn=true;   //Input Validation
     while(tryAgn){
         cout<<"How many Players? (Up to 4): ";
         cin>>numPlyrs;
@@ -134,9 +135,9 @@ void plyGame(){
                 cout<<"\nDifficulty?\n1: Dumb Bot    2: Lucky Bot    "
                         <<"3: Smart Bot\nEnter 1, 2 or 3: "; 
                 cin>>difChc;          //Input difficulty level 
-                if(tryAgn<0||tryAgn>3||!cin||cin.fail()){
-                    cin.ignore();
+                if(difChc<0||difChc>3||!cin||cin.fail()){
                     cin.clear();
+                    cin.ignore();
                     cout<<"Invalid!"<<endl;
                 }
                 else tryAgn=false;
@@ -184,7 +185,7 @@ void plyGame(){
                     unoChc='u';        //bot calls uno
                 }
                 else{ //If uno status is false
-                    cin.clear();
+                    unoChc='a';
                     cout<<plyrPtr->getName()<<" doesn't call uno."<<endl; //msg
                 }
             }

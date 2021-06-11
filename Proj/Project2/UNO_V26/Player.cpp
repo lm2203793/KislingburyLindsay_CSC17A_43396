@@ -28,25 +28,12 @@ void Player::recCrd(Card add){
     //Add the card to player's hand
     hand.push_back(temp);
 }
-///dont need this
-bool Player::recCrdv(Card add, Card dis){
-    bool t; 
-    Card temp;
-    temp=add;
-    //Add the card to player's hand
-    hand.push_back(temp);
-    t=valPlay(dis, add);
-    cout<<t;
-    return t;
-}
-//validate card just drawn (no valid cards to play)
+//Validate card just drawn when forced to play it
 bool Player::valLstCrd(Card dis){
     bool temp;
     temp=valPlay(dis, hand.back());
     return temp;
 }
-
-
 //Show Player's hand
 void Player::showHnd(){
     for(int i=0; i<hand.size(); i++){//Loop on Player's hand size
@@ -59,12 +46,6 @@ void Player::showHnd(){
     cout<<endl;
 }
 
-//Play a card
-void Player::playCard(int index, Deck &deck){
-    Card card=hand[index];  //hold the card chosen
-    //Take Played Card Out of Player's Hand
-    hand.erase(hand.begin()+index);
-}
 //Determine Uno Status
 void Player::unoStat(bool canPlay){
     if(hand.size()==2){    //If player has two cards
@@ -101,29 +82,32 @@ bool Player::cPlyStat(Card &discard){
         }
     }
 }
+//Get type of card in hand
 Type Player::getType(int index){
        Type type;
        type=hand[index].getType();
        return type;
    }
+//Get color of card in hand
 char Player::getCol(int index){
         char c;
         c=hand[index].getColor();
         return c;
     }
+//Get number of card in hand
 int Player::getNum(int index){
         int num;
         num=hand[index].getNum();
         return num;
     }
-
+//Play the card just drawn when forced to play
 Card Player::playTop(){
     Card temp;
     temp=hand.back();
     hand.pop_back();
     return temp;
 }
-
+//Set player scores
 void Player::setScr(){
         scr.win=winner;
         scr.nm=name;
@@ -133,6 +117,7 @@ void Player::setScr(){
         }
         scr.lrgHnd=largest;
     }
+//Print player scores
 void Player::prntScr(){
         if(scr.win)cout<<"Winner: ";
         else cout<<"Loser: ";
@@ -140,7 +125,7 @@ void Player::prntScr(){
         cout<<scr.nm<<"' Largest hand: "<<scr.lrgHnd<<endl;
     }
     
-    
+//Validate card played
 bool Player::valPlay(Card disCrd, Card pCard){ 
     //Temp variables store card info
     Type pType=pCard.getType();  //Hold player's card type
@@ -177,4 +162,3 @@ bool Player::valPlay(Card disCrd, Card pCard){
     }
     return false;
 }
-

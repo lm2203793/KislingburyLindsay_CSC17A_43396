@@ -43,8 +43,8 @@ Card Hplayer::getPcrd(Card &disCrd){
             hand[index].setColor(colChc);  //Change the color of discard 
     }
     
-    temp=hand[chc]; //Set temp to hand at card choice index
-    hand.erase(hand.begin()+chc); //Remove that card from the hand
+    temp=hand[index]; //Set temp to hand at card choice index
+    hand.erase(hand.begin()+index); //Remove that card from the hand
     return temp;   //Return temp
 }
 //Returns the card to play
@@ -70,7 +70,7 @@ int Hplayer::pCrd(Card disCrd, int cardChc){
         throw BadChc(cardChc); //Create BadChc object
     }
 }
-
+//Choose a wild color
 char Hplayer::chsWild(){
     char colChc;
     bool error=false;
