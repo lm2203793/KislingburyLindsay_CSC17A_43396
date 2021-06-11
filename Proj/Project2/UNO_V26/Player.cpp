@@ -122,7 +122,7 @@ void Player::prntScr(){
         if(scr.win)cout<<"Winner: ";
         else cout<<"Loser: ";
         cout<<scr.nm<<endl;
-        cout<<scr.nm<<"' Largest hand: "<<scr.lrgHnd<<endl;
+        cout<<scr.nm<<"'s Largest hand: "<<scr.lrgHnd<<endl;
     }
     
 //Validate card played

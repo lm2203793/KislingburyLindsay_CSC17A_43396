@@ -1,38 +1,20 @@
 +-------------------------------+
            GAME SCORE:          
-Players: Smart Bot, Dumb Bot, Lucky Bot
-Winner: Smart Bot
-Loser: Dumb Bot
+Players: Lucky Bot, Smart Bot
+Winner: Lucky Bot
+Loser: Smart Bot
+
+Lucky Bot's Largest Hand: 30
+Smart Bot's Largest Hand: 53
++-------------------------------+
++-------------------------------+
+           GAME SCORE:          
+Players: Nick, Lindsay, Lucky Bot
+Loser: Nick
+Winner: Lindsay
 Loser: Lucky Bot
 
-Smart Bot's Largest Hand: 19
-Dumb Bot's Largest Hand: 47
-Lucky Bot's Largest Hand: 31
-+-------------------------------+
-+-------------------------------+
-           GAME SCORE:          
-Players: Lindsay, Nick
-Winner: Lindsay
-Loser: Nick
-
-Lindsay's Largest Hand: 40
-Nick's Largest Hand: 58
-+-------------------------------+
-+-------------------------------+
-           GAME SCORE:          
-Players: lucky, smart
-Loser: lucky
-Winner: smart
-
-lucky's Largest Hand: 11
-smart's Largest Hand: 17
-+-------------------------------+
-+-------------------------------+
-           GAME SCORE:          
-Players: dumb, smart
-Winner: dumb
-Loser: smart
-
-dumb's Largest Hand: 45
-smart's Largest Hand: 40
+Nick's Largest Hand: 22
+Lindsay's Largest Hand: 15
+Lucky Bot's Largest Hand: 52
 +-------------------------------+
