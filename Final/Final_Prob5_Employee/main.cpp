@@ -14,15 +14,15 @@ using namespace std;
 
 //Execution Begins Here
 int main(int argc, char** argv) {
-    char cName[20];
-    char cTitle[20];
-    float rate;
-    int num;
-    bool tryAgn;
-    string name;
-    string title;
-    char choice;
-    bool repeat;
+    //Declare Variables
+    char cName[20]; //Employee name
+    char cTitle[20];//Employee title
+    float rate;     //Hourly rate
+    bool tryAgn;    //Input Validation
+    string name;    //Hold name for input validation
+    string title;   //Hold title for input validation
+    char choice;    //Choice to repeat
+    bool repeat;    //true=repeat
     do{
         cout<<"Employee Pay Calculator"<<endl;
         //Input Name, Job Title and Hourly Rate

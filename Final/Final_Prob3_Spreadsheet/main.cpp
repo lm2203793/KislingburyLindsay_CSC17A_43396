@@ -1,26 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
- * File:   main.cpp
- * Author: linds
- *
- * Created on June 8, 2021, 10:58 PM
+ * File:   Prob3TableInherited.h
+ * Author: Lindsay Kislingbury
+ * Purpose: Spread Sheet Stuff
+ * Created on June 9, 2021, 3:24 PM
  */
-
+//System Libraries
 #include <cstdlib>
 #include <iostream>
+//User Libraries
 #include "Prob3Table.h"
 #include "Prob3TableInherited.h"
-
 using namespace std;
 
-/*
- * 
- */
 //Execution Begins Here!
 int main(int argc, char** argv) {
 

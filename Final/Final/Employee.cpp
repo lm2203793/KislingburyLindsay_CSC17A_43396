@@ -86,5 +86,3 @@ void  Employee::toString(){
     cout<<" Gross Pay = "<<fixed<<setprecision(2)<<GrossPay
             <<" Net Pay = "<<NetPay<<endl;
 } 
-
-
